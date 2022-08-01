@@ -18,6 +18,12 @@ func createTestOwner(keeper *keeper.Keeper, ctx sdk.Context) types.Owner {
 	return item
 }
 
+func createNamedTestOwner(keeper *keeper.Keeper, ctx sdk.Context) types.Owner {
+	item := types.Owner{Owner: "test-owner"}
+	keeper.SetOwner(ctx, item)
+	return item
+}
+
 func TestOwnerGet(t *testing.T) {
 	keeper, ctx := keepertest.LotteryKeeper(t)
 	item := createTestOwner(keeper, ctx)
