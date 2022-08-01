@@ -9,8 +9,12 @@
  * ---------------------------------------------------------------
  */
 
-export interface LotteryMsgClaimOwnerResponse {
+export interface LotteryMsgChangeOwnerResponse {
   success?: string;
+}
+
+export interface LotteryMsgClaimOwnerResponse {
+  success?: boolean;
 }
 
 export interface LotteryOwner {

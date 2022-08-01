@@ -51587,11 +51587,16 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
-  lotterychainnel.lottery.MsgClaimOwnerResponse:
+  lotterychainnel.lottery.MsgChangeOwnerResponse:
     type: object
     properties:
       success:
         type: string
+  lotterychainnel.lottery.MsgClaimOwnerResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
   lotterychainnel.lottery.Owner:
     type: object
     properties:

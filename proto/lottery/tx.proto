@@ -8,6 +8,7 @@ option go_package = "lottery-chain-nel/x/lottery/types";
 // Msg defines the Msg service.
 service Msg {
       rpc ClaimOwner(MsgClaimOwner) returns (MsgClaimOwnerResponse);
+  rpc ChangeOwner(MsgChangeOwner) returns (MsgChangeOwnerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -17,6 +18,15 @@ message MsgClaimOwner {
 
 message MsgClaimOwnerResponse {
   bool success = 1;
+}
+
+message MsgChangeOwner {
+  string creator = 1;
+  string newOwner = 2;
+}
+
+message MsgChangeOwnerResponse {
+  string success = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message
