@@ -3,12 +3,17 @@ import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "lotterychainnel.lottery";
 
-export interface Owner {}
+export interface Owner {
+  owner: string;
+}
 
-const baseOwner: object = {};
+const baseOwner: object = { owner: "" };
 
 export const Owner = {
-  encode(_: Owner, writer: Writer = Writer.create()): Writer {
+  encode(message: Owner, writer: Writer = Writer.create()): Writer {
+    if (message.owner !== "") {
+      writer.uint32(10).string(message.owner);
+    }
     return writer;
   },
 
@@ -19,6 +24,9 @@ export const Owner = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.owner = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -27,18 +35,29 @@ export const Owner = {
     return message;
   },
 
-  fromJSON(_: any): Owner {
+  fromJSON(object: any): Owner {
     const message = { ...baseOwner } as Owner;
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = String(object.owner);
+    } else {
+      message.owner = "";
+    }
     return message;
   },
 
-  toJSON(_: Owner): unknown {
+  toJSON(message: Owner): unknown {
     const obj: any = {};
+    message.owner !== undefined && (obj.owner = message.owner);
     return obj;
   },
 
-  fromPartial(_: DeepPartial<Owner>): Owner {
+  fromPartial(object: DeepPartial<Owner>): Owner {
     const message = { ...baseOwner } as Owner;
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = object.owner;
+    } else {
+      message.owner = "";
+    }
     return message;
   },
 };

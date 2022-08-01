@@ -7,7 +7,16 @@ option go_package = "lottery-chain-nel/x/lottery/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc ClaimOwner(MsgClaimOwner) returns (MsgClaimOwnerResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgClaimOwner {
+  string creator = 1;
+}
+
+message MsgClaimOwnerResponse {
+  string success = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

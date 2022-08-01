@@ -9,7 +9,13 @@
  * ---------------------------------------------------------------
  */
 
-export type LotteryOwner = object;
+export interface LotteryMsgClaimOwnerResponse {
+  success?: string;
+}
+
+export interface LotteryOwner {
+  owner?: string;
+}
 
 /**
  * Params defines the parameters for the module.
