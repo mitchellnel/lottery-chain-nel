@@ -8,5 +8,5 @@ import (
 
 // x/lottery module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrLotteryAlreadyOwned = sdkerrors.Register(ModuleName, 1000, "Lottery already has an owner")
 )
