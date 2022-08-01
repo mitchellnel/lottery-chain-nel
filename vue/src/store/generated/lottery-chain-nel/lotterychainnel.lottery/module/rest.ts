@@ -9,10 +9,16 @@
  * ---------------------------------------------------------------
  */
 
+export type LotteryOwner = object;
+
 /**
  * Params defines the parameters for the module.
  */
 export type LotteryParams = object;
+
+export interface LotteryQueryGetOwnerResponse {
+  Owner?: LotteryOwner;
+}
 
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
@@ -229,6 +235,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryOwner
+   * @summary Queries a Owner by index.
+   * @request GET:/lottery-chain-nel/lottery/owner
+   */
+  queryOwner = (params: RequestParams = {}) =>
+    this.request<LotteryQueryGetOwnerResponse, RpcStatus>({
+      path: `/lottery-chain-nel/lottery/owner`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *
