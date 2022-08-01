@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Params } from "../lottery/params";
 import { Owner } from "../lottery/owner";
+import { EntranceFee } from "../lottery/entrance_fee";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "lotterychainnel.lottery";
@@ -8,8 +9,9 @@ export const protobufPackage = "lotterychainnel.lottery";
 /** GenesisState defines the lottery module's genesis state. */
 export interface GenesisState {
   params: Params | undefined;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   owner: Owner | undefined;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  entranceFee: EntranceFee | undefined;
 }
 
 const baseGenesisState: object = {};
@@ -21,6 +23,12 @@ export const GenesisState = {
     }
     if (message.owner !== undefined) {
       Owner.encode(message.owner, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.entranceFee !== undefined) {
+      EntranceFee.encode(
+        message.entranceFee,
+        writer.uint32(26).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -37,6 +45,9 @@ export const GenesisState = {
           break;
         case 2:
           message.owner = Owner.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.entranceFee = EntranceFee.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -58,6 +69,11 @@ export const GenesisState = {
     } else {
       message.owner = undefined;
     }
+    if (object.entranceFee !== undefined && object.entranceFee !== null) {
+      message.entranceFee = EntranceFee.fromJSON(object.entranceFee);
+    } else {
+      message.entranceFee = undefined;
+    }
     return message;
   },
 
@@ -67,6 +83,10 @@ export const GenesisState = {
       (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     message.owner !== undefined &&
       (obj.owner = message.owner ? Owner.toJSON(message.owner) : undefined);
+    message.entranceFee !== undefined &&
+      (obj.entranceFee = message.entranceFee
+        ? EntranceFee.toJSON(message.entranceFee)
+        : undefined);
     return obj;
   },
 
@@ -81,6 +101,11 @@ export const GenesisState = {
       message.owner = Owner.fromPartial(object.owner);
     } else {
       message.owner = undefined;
+    }
+    if (object.entranceFee !== undefined && object.entranceFee !== null) {
+      message.entranceFee = EntranceFee.fromPartial(object.entranceFee);
+    } else {
+      message.entranceFee = undefined;
     }
     return message;
   },

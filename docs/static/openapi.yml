@@ -29809,6 +29809,38 @@ paths:
           format: uint64
       tags:
         - Query
+  /lottery-chain-nel/lottery/entrance_fee:
+    get:
+      summary: Queries a EntranceFee by index.
+      operationId: LotterychainnelLotteryEntranceFee
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              EntranceFee:
+                type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /lottery-chain-nel/lottery/owner:
     get:
       summary: Queries a Owner by index.
@@ -51587,11 +51619,13 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
+  lotterychainnel.lottery.EntranceFee:
+    type: object
   lotterychainnel.lottery.MsgChangeOwnerResponse:
     type: object
     properties:
       success:
-        type: string
+        type: boolean
   lotterychainnel.lottery.MsgClaimOwnerResponse:
     type: object
     properties:
@@ -51605,6 +51639,11 @@ definitions:
   lotterychainnel.lottery.Params:
     type: object
     description: Params defines the parameters for the module.
+  lotterychainnel.lottery.QueryGetEntranceFeeResponse:
+    type: object
+    properties:
+      EntranceFee:
+        type: object
   lotterychainnel.lottery.QueryGetOwnerResponse:
     type: object
     properties:

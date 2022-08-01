@@ -9,8 +9,10 @@
  * ---------------------------------------------------------------
  */
 
+export type LotteryEntranceFee = object;
+
 export interface LotteryMsgChangeOwnerResponse {
-  success?: string;
+  success?: boolean;
 }
 
 export interface LotteryMsgClaimOwnerResponse {
@@ -25,6 +27,10 @@ export interface LotteryOwner {
  * Params defines the parameters for the module.
  */
 export type LotteryParams = object;
+
+export interface LotteryQueryGetEntranceFeeResponse {
+  EntranceFee?: LotteryEntranceFee;
+}
 
 export interface LotteryQueryGetOwnerResponse {
   Owner?: LotteryOwner;
@@ -241,10 +247,26 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title lottery/genesis.proto
+ * @title lottery/entrance_fee.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryEntranceFee
+   * @summary Queries a EntranceFee by index.
+   * @request GET:/lottery-chain-nel/lottery/entrance_fee
+   */
+  queryEntranceFee = (params: RequestParams = {}) =>
+    this.request<LotteryQueryGetEntranceFeeResponse, RpcStatus>({
+      path: `/lottery-chain-nel/lottery/entrance_fee`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

@@ -2,6 +2,7 @@
 import { Reader, Writer } from "protobufjs/minimal";
 import { Params } from "../lottery/params";
 import { Owner } from "../lottery/owner";
+import { EntranceFee } from "../lottery/entrance_fee";
 
 export const protobufPackage = "lotterychainnel.lottery";
 
@@ -18,6 +19,12 @@ export interface QueryGetOwnerRequest {}
 
 export interface QueryGetOwnerResponse {
   Owner: Owner | undefined;
+}
+
+export interface QueryGetEntranceFeeRequest {}
+
+export interface QueryGetEntranceFeeResponse {
+  EntranceFee: EntranceFee | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -216,12 +223,143 @@ export const QueryGetOwnerResponse = {
   },
 };
 
+const baseQueryGetEntranceFeeRequest: object = {};
+
+export const QueryGetEntranceFeeRequest = {
+  encode(
+    _: QueryGetEntranceFeeRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetEntranceFeeRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetEntranceFeeRequest,
+    } as QueryGetEntranceFeeRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetEntranceFeeRequest {
+    const message = {
+      ...baseQueryGetEntranceFeeRequest,
+    } as QueryGetEntranceFeeRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetEntranceFeeRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryGetEntranceFeeRequest>
+  ): QueryGetEntranceFeeRequest {
+    const message = {
+      ...baseQueryGetEntranceFeeRequest,
+    } as QueryGetEntranceFeeRequest;
+    return message;
+  },
+};
+
+const baseQueryGetEntranceFeeResponse: object = {};
+
+export const QueryGetEntranceFeeResponse = {
+  encode(
+    message: QueryGetEntranceFeeResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.EntranceFee !== undefined) {
+      EntranceFee.encode(
+        message.EntranceFee,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetEntranceFeeResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetEntranceFeeResponse,
+    } as QueryGetEntranceFeeResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.EntranceFee = EntranceFee.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetEntranceFeeResponse {
+    const message = {
+      ...baseQueryGetEntranceFeeResponse,
+    } as QueryGetEntranceFeeResponse;
+    if (object.EntranceFee !== undefined && object.EntranceFee !== null) {
+      message.EntranceFee = EntranceFee.fromJSON(object.EntranceFee);
+    } else {
+      message.EntranceFee = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetEntranceFeeResponse): unknown {
+    const obj: any = {};
+    message.EntranceFee !== undefined &&
+      (obj.EntranceFee = message.EntranceFee
+        ? EntranceFee.toJSON(message.EntranceFee)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetEntranceFeeResponse>
+  ): QueryGetEntranceFeeResponse {
+    const message = {
+      ...baseQueryGetEntranceFeeResponse,
+    } as QueryGetEntranceFeeResponse;
+    if (object.EntranceFee !== undefined && object.EntranceFee !== null) {
+      message.EntranceFee = EntranceFee.fromPartial(object.EntranceFee);
+    } else {
+      message.EntranceFee = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
   /** Queries a Owner by index. */
   Owner(request: QueryGetOwnerRequest): Promise<QueryGetOwnerResponse>;
+  /** Queries a EntranceFee by index. */
+  EntranceFee(
+    request: QueryGetEntranceFeeRequest
+  ): Promise<QueryGetEntranceFeeResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -248,6 +386,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetOwnerResponse.decode(new Reader(data))
+    );
+  }
+
+  EntranceFee(
+    request: QueryGetEntranceFeeRequest
+  ): Promise<QueryGetEntranceFeeResponse> {
+    const data = QueryGetEntranceFeeRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "lotterychainnel.lottery.Query",
+      "EntranceFee",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetEntranceFeeResponse.decode(new Reader(data))
     );
   }
 }

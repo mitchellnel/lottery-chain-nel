@@ -22,7 +22,8 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
-				Owner: &types.Owner{},
+				Owner:       &types.Owner{},
+				EntranceFee: &types.EntranceFee{},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,

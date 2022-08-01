@@ -17,7 +17,7 @@ export interface MsgChangeOwner {
 }
 
 export interface MsgChangeOwnerResponse {
-  success: string;
+  success: boolean;
 }
 
 const baseMsgClaimOwner: object = { creator: "" };
@@ -207,15 +207,15 @@ export const MsgChangeOwner = {
   },
 };
 
-const baseMsgChangeOwnerResponse: object = { success: "" };
+const baseMsgChangeOwnerResponse: object = { success: false };
 
 export const MsgChangeOwnerResponse = {
   encode(
     message: MsgChangeOwnerResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.success !== "") {
-      writer.uint32(10).string(message.success);
+    if (message.success === true) {
+      writer.uint32(8).bool(message.success);
     }
     return writer;
   },
@@ -228,7 +228,7 @@ export const MsgChangeOwnerResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.success = reader.string();
+          message.success = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -241,9 +241,9 @@ export const MsgChangeOwnerResponse = {
   fromJSON(object: any): MsgChangeOwnerResponse {
     const message = { ...baseMsgChangeOwnerResponse } as MsgChangeOwnerResponse;
     if (object.success !== undefined && object.success !== null) {
-      message.success = String(object.success);
+      message.success = Boolean(object.success);
     } else {
-      message.success = "";
+      message.success = false;
     }
     return message;
   },
@@ -261,7 +261,7 @@ export const MsgChangeOwnerResponse = {
     if (object.success !== undefined && object.success !== null) {
       message.success = object.success;
     } else {
-      message.success = "";
+      message.success = false;
     }
     return message;
   },

@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "lottery/params.proto";
 import "lottery/owner.proto";
+import "lottery/entrance_fee.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "lottery-chain-nel/x/lottery/types";
@@ -19,6 +20,10 @@ service Query {
   // Queries a Owner by index.
 	rpc Owner(QueryGetOwnerRequest) returns (QueryGetOwnerResponse) {
 		option (google.api.http).get = "/lottery-chain-nel/lottery/owner";
+	}
+// Queries a EntranceFee by index.
+	rpc EntranceFee(QueryGetEntranceFeeRequest) returns (QueryGetEntranceFeeResponse) {
+		option (google.api.http).get = "/lottery-chain-nel/lottery/entrance_fee";
 	}
 // this line is used by starport scaffolding # 2
 }
@@ -36,5 +41,10 @@ message QueryGetOwnerRequest {}
 
 message QueryGetOwnerResponse {
 	Owner Owner = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetEntranceFeeRequest {}
+
+message QueryGetEntranceFeeResponse {
+	EntranceFee EntranceFee = 1 [(gogoproto.nullable) = false];
 }
 // this line is used by starport scaffolding # 3
