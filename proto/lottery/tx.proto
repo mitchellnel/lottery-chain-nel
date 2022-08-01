@@ -16,7 +16,7 @@ message MsgClaimOwner {
 }
 
 message MsgClaimOwnerResponse {
-  string success = 1;
+  bool success = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message
