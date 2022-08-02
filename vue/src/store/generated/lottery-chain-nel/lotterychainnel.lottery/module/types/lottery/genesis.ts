@@ -3,7 +3,6 @@ import { Params } from "../lottery/params";
 import { Owner } from "../lottery/owner";
 import { EntranceFee } from "../lottery/entrance_fee";
 import { LotteryState } from "../lottery/lottery_state";
-import { Player } from "../lottery/player";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "lotterychainnel.lottery";
@@ -13,9 +12,8 @@ export interface GenesisState {
   params: Params | undefined;
   owner: Owner | undefined;
   entranceFee: EntranceFee | undefined;
-  lotteryState: LotteryState | undefined;
   /** this line is used by starport scaffolding # genesis/proto/state */
-  playerList: Player[];
+  lotteryState: LotteryState | undefined;
 }
 
 const baseGenesisState: object = {};
@@ -40,9 +38,6 @@ export const GenesisState = {
         writer.uint32(34).fork()
       ).ldelim();
     }
-    for (const v of message.playerList) {
-      Player.encode(v!, writer.uint32(42).fork()).ldelim();
-    }
     return writer;
   },
 
@@ -50,7 +45,6 @@ export const GenesisState = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGenesisState } as GenesisState;
-    message.playerList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -66,9 +60,6 @@ export const GenesisState = {
         case 4:
           message.lotteryState = LotteryState.decode(reader, reader.uint32());
           break;
-        case 5:
-          message.playerList.push(Player.decode(reader, reader.uint32()));
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -79,7 +70,6 @@ export const GenesisState = {
 
   fromJSON(object: any): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
-    message.playerList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -100,11 +90,6 @@ export const GenesisState = {
     } else {
       message.lotteryState = undefined;
     }
-    if (object.playerList !== undefined && object.playerList !== null) {
-      for (const e of object.playerList) {
-        message.playerList.push(Player.fromJSON(e));
-      }
-    }
     return message;
   },
 
@@ -122,19 +107,11 @@ export const GenesisState = {
       (obj.lotteryState = message.lotteryState
         ? LotteryState.toJSON(message.lotteryState)
         : undefined);
-    if (message.playerList) {
-      obj.playerList = message.playerList.map((e) =>
-        e ? Player.toJSON(e) : undefined
-      );
-    } else {
-      obj.playerList = [];
-    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
-    message.playerList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -154,11 +131,6 @@ export const GenesisState = {
       message.lotteryState = LotteryState.fromPartial(object.lotteryState);
     } else {
       message.lotteryState = undefined;
-    }
-    if (object.playerList !== undefined && object.playerList !== null) {
-      for (const e of object.playerList) {
-        message.playerList.push(Player.fromPartial(e));
-      }
     }
     return message;
   },
