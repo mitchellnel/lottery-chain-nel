@@ -4,5 +4,11 @@ package lotterychainnel.lottery;
 option go_package = "lottery-chain-nel/x/lottery/types";
 
 message LotteryState {
-  
+    enum LOTTERY_STATE {
+        CLOSED = 0;
+        CALCULATING_WINNER = 1;
+        OPEN = 2;
+    }
+
+    LOTTERY_STATE lottery_state = 1;
 }
