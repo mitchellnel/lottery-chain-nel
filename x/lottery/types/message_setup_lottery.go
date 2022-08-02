@@ -9,7 +9,7 @@ const TypeMsgSetupLottery = "setup_lottery"
 
 var _ sdk.Msg = &MsgSetupLottery{}
 
-func NewMsgSetupLottery(creator string, entranceFee string) *MsgSetupLottery {
+func NewMsgSetupLottery(creator string, entranceFee uint64) *MsgSetupLottery {
 	return &MsgSetupLottery{
 		Creator:     creator,
 		EntranceFee: entranceFee,
