@@ -34,15 +34,28 @@ func (k msgServer) EnterLottery(
 			)
 	}
 
-	// prepare to transfer
-	wrapped_entranceFee, _ := k.GetEntranceFee(ctx)
-	entranceFee := wrapped_entranceFee.EntranceFee
-	entranceFee_coin := sdk.Coins{sdk.NewInt64Coin("token", int64(entranceFee))}
-
+	// convert Bech32 to AccAddress
 	playerAddr, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return &types.MsgEnterLotteryResponse{Success: false}, err
 	}
+
+	// check that player has not already entered the lottery
+	players := k.GetAllPlayer(ctx)
+	for _, player := range players {
+		if player.Address == playerAddr.String() {
+			return &types.MsgEnterLotteryResponse{Success: false},
+				sdkerrors.Wrapf(
+					types.ErrPlayerAlreadyEntered,
+					"You have already entered the lottery",
+				)
+		}
+	}
+
+	// prepare to transfer
+	wrapped_entranceFee, _ := k.GetEntranceFee(ctx)
+	entranceFee := wrapped_entranceFee.EntranceFee
+	entranceFee_coin := sdk.Coins{sdk.NewInt64Coin("token", int64(entranceFee))}
 
 	// tranfer entrance fee from the message creator to the module
 	err = k.bankKeeper.SendCoinsFromAccountToModule(
@@ -55,7 +68,11 @@ func (k msgServer) EnterLottery(
 		return &types.MsgEnterLotteryResponse{Success: false}, err
 	}
 
-	// TODO: add player to a list of players currently taking part in the lottery
+	// add the new player to the list of players entered in the lottery
+	var newPlayer = types.Player{
+		Address: playerAddr.String(),
+	}
+	k.AppendPlayer(ctx, newPlayer)
 
-	return &types.MsgEnterLotteryResponse{}, nil
+	return &types.MsgEnterLotteryResponse{Success: true}, nil
 }
