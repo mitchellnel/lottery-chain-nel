@@ -292,21 +292,6 @@ export default {
 		},
 		
 		
-		async sendMsgClaimOwner({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgClaimOwner(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgClaimOwner:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgChangeEntranceFee({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -337,6 +322,21 @@ export default {
 				}
 			}
 		},
+		async sendMsgClaimOwner({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgClaimOwner(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgClaimOwner:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgChangeOwner({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -352,20 +352,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgClaimOwner({ rootGetters }, { value }) {
+		async sendMsgEnterLottery({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgClaimOwner(value)
-				return msg
+				const msg = await txClient.msgEnterLottery(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgClaimOwner:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgEnterLottery:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgEnterLottery:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgChangeEntranceFee({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -392,6 +394,19 @@ export default {
 				}
 			}
 		},
+		async MsgClaimOwner({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgClaimOwner(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgClaimOwner:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgChangeOwner({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -402,6 +417,19 @@ export default {
 					throw new Error('TxClient:MsgChangeOwner:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgChangeOwner:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgEnterLottery({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgEnterLottery(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgEnterLottery:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgEnterLottery:Create Could not create message: ' + e.message)
 				}
 			}
 		},

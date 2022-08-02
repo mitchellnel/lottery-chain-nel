@@ -51847,12 +51847,22 @@ definitions:
       - CALCULATING_WINNER
       - OPEN
     default: CLOSED
+  lotterychainnel.lottery.MsgChangeEntranceFeeResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
   lotterychainnel.lottery.MsgChangeOwnerResponse:
     type: object
     properties:
       success:
         type: boolean
   lotterychainnel.lottery.MsgClaimOwnerResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+  lotterychainnel.lottery.MsgEnterLotteryResponse:
     type: object
     properties:
       success:

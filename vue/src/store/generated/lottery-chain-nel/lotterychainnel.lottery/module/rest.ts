@@ -36,6 +36,10 @@ export interface LotteryMsgClaimOwnerResponse {
   success?: boolean;
 }
 
+export interface LotteryMsgEnterLotteryResponse {
+  success?: boolean;
+}
+
 export interface LotteryMsgSetupLotteryResponse {
   success?: boolean;
 }
