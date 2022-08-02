@@ -29821,6 +29821,42 @@ paths:
             properties:
               EntranceFee:
                 type: object
+                properties:
+                  entrance_fee:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /lottery-chain-nel/lottery/lottery_state:
+    get:
+      summary: Queries a LotteryState by index.
+      operationId: LotterychainnelLotteryLotteryState
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              LotteryState:
+                type: object
         default:
           description: An unexpected error response.
           schema:
@@ -51621,6 +51657,12 @@ definitions:
       the connection handshake.
   lotterychainnel.lottery.EntranceFee:
     type: object
+    properties:
+      entrance_fee:
+        type: string
+        format: uint64
+  lotterychainnel.lottery.LotteryState:
+    type: object
   lotterychainnel.lottery.MsgChangeOwnerResponse:
     type: object
     properties:
@@ -51643,6 +51685,15 @@ definitions:
     type: object
     properties:
       EntranceFee:
+        type: object
+        properties:
+          entrance_fee:
+            type: string
+            format: uint64
+  lotterychainnel.lottery.QueryGetLotteryStateResponse:
+    type: object
+    properties:
+      LotteryState:
         type: object
   lotterychainnel.lottery.QueryGetOwnerResponse:
     type: object

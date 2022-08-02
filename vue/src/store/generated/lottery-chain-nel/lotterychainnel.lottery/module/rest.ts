@@ -9,7 +9,12 @@
  * ---------------------------------------------------------------
  */
 
-export type LotteryEntranceFee = object;
+export interface LotteryEntranceFee {
+  /** @format uint64 */
+  entrance_fee?: string;
+}
+
+export type LotteryLotteryState = object;
 
 export interface LotteryMsgChangeOwnerResponse {
   success?: boolean;
@@ -30,6 +35,10 @@ export type LotteryParams = object;
 
 export interface LotteryQueryGetEntranceFeeResponse {
   EntranceFee?: LotteryEntranceFee;
+}
+
+export interface LotteryQueryGetLotteryStateResponse {
+  LotteryState?: LotteryLotteryState;
 }
 
 export interface LotteryQueryGetOwnerResponse {
@@ -262,6 +271,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryEntranceFee = (params: RequestParams = {}) =>
     this.request<LotteryQueryGetEntranceFeeResponse, RpcStatus>({
       path: `/lottery-chain-nel/lottery/entrance_fee`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryLotteryState
+   * @summary Queries a LotteryState by index.
+   * @request GET:/lottery-chain-nel/lottery/lottery_state
+   */
+  queryLotteryState = (params: RequestParams = {}) =>
+    this.request<LotteryQueryGetLotteryStateResponse, RpcStatus>({
+      path: `/lottery-chain-nel/lottery/lottery_state`,
       method: "GET",
       format: "json",
       ...params,

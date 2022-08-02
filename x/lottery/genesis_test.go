@@ -14,8 +14,9 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
-		Owner:       &types.Owner{},
-		EntranceFee: &types.EntranceFee{},
+		Owner:        &types.Owner{},
+		EntranceFee:  &types.EntranceFee{},
+		LotteryState: &types.LotteryState{},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -29,5 +30,6 @@ func TestGenesis(t *testing.T) {
 
 	require.Equal(t, genesisState.Owner, got.Owner)
 	require.Equal(t, genesisState.EntranceFee, got.EntranceFee)
+	require.Equal(t, genesisState.LotteryState, got.LotteryState)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

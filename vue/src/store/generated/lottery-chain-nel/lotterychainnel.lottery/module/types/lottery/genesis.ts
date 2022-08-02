@@ -2,6 +2,7 @@
 import { Params } from "../lottery/params";
 import { Owner } from "../lottery/owner";
 import { EntranceFee } from "../lottery/entrance_fee";
+import { LotteryState } from "../lottery/lottery_state";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "lotterychainnel.lottery";
@@ -10,8 +11,9 @@ export const protobufPackage = "lotterychainnel.lottery";
 export interface GenesisState {
   params: Params | undefined;
   owner: Owner | undefined;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   entranceFee: EntranceFee | undefined;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  lotteryState: LotteryState | undefined;
 }
 
 const baseGenesisState: object = {};
@@ -28,6 +30,12 @@ export const GenesisState = {
       EntranceFee.encode(
         message.entranceFee,
         writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.lotteryState !== undefined) {
+      LotteryState.encode(
+        message.lotteryState,
+        writer.uint32(34).fork()
       ).ldelim();
     }
     return writer;
@@ -48,6 +56,9 @@ export const GenesisState = {
           break;
         case 3:
           message.entranceFee = EntranceFee.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.lotteryState = LotteryState.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -74,6 +85,11 @@ export const GenesisState = {
     } else {
       message.entranceFee = undefined;
     }
+    if (object.lotteryState !== undefined && object.lotteryState !== null) {
+      message.lotteryState = LotteryState.fromJSON(object.lotteryState);
+    } else {
+      message.lotteryState = undefined;
+    }
     return message;
   },
 
@@ -86,6 +102,10 @@ export const GenesisState = {
     message.entranceFee !== undefined &&
       (obj.entranceFee = message.entranceFee
         ? EntranceFee.toJSON(message.entranceFee)
+        : undefined);
+    message.lotteryState !== undefined &&
+      (obj.lotteryState = message.lotteryState
+        ? LotteryState.toJSON(message.lotteryState)
         : undefined);
     return obj;
   },
@@ -106,6 +126,11 @@ export const GenesisState = {
       message.entranceFee = EntranceFee.fromPartial(object.entranceFee);
     } else {
       message.entranceFee = undefined;
+    }
+    if (object.lotteryState !== undefined && object.lotteryState !== null) {
+      message.lotteryState = LotteryState.fromPartial(object.lotteryState);
+    } else {
+      message.lotteryState = undefined;
     }
     return message;
   },

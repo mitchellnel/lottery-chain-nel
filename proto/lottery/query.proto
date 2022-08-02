@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "lottery/params.proto";
 import "lottery/owner.proto";
 import "lottery/entrance_fee.proto";
+import "lottery/lottery_state.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "lottery-chain-nel/x/lottery/types";
@@ -24,6 +25,10 @@ service Query {
 // Queries a EntranceFee by index.
 	rpc EntranceFee(QueryGetEntranceFeeRequest) returns (QueryGetEntranceFeeResponse) {
 		option (google.api.http).get = "/lottery-chain-nel/lottery/entrance_fee";
+	}
+// Queries a LotteryState by index.
+	rpc LotteryState(QueryGetLotteryStateRequest) returns (QueryGetLotteryStateResponse) {
+		option (google.api.http).get = "/lottery-chain-nel/lottery/lottery_state";
 	}
 // this line is used by starport scaffolding # 2
 }
@@ -46,5 +51,10 @@ message QueryGetEntranceFeeRequest {}
 
 message QueryGetEntranceFeeResponse {
 	EntranceFee EntranceFee = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetLotteryStateRequest {}
+
+message QueryGetLotteryStateResponse {
+	LotteryState LotteryState = 1 [(gogoproto.nullable) = false];
 }
 // this line is used by starport scaffolding # 3

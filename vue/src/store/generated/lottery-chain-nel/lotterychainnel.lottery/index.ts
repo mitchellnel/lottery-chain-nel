@@ -1,11 +1,12 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
 import { EntranceFee } from "./module/types/lottery/entrance_fee"
+import { LotteryState } from "./module/types/lottery/lottery_state"
 import { Owner } from "./module/types/lottery/owner"
 import { Params } from "./module/types/lottery/params"
 
 
-export { EntranceFee, Owner, Params };
+export { EntranceFee, LotteryState, Owner, Params };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -46,9 +47,11 @@ const getDefaultState = () => {
 				Params: {},
 				Owner: {},
 				EntranceFee: {},
+				LotteryState: {},
 				
 				_Structure: {
 						EntranceFee: getStructure(EntranceFee.fromPartial({})),
+						LotteryState: getStructure(LotteryState.fromPartial({})),
 						Owner: getStructure(Owner.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
@@ -96,6 +99,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.EntranceFee[JSON.stringify(params)] ?? {}
+		},
+				getLotteryState: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.LotteryState[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -192,6 +201,28 @@ export default {
 				return getters['getEntranceFee']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryEntranceFee API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryLotteryState({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryLotteryState()).data
+				
+					
+				commit('QUERY', { query: 'LotteryState', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryLotteryState', payload: { options: { all }, params: {...key},query }})
+				return getters['getLotteryState']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryLotteryState API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},

@@ -28,3 +28,7 @@ const (
 const (
 	EntranceFeeKey = "EntranceFee-value-"
 )
+
+const (
+	LotteryStateKey = "LotteryState-value-"
+)
