@@ -18,6 +18,18 @@ func createTestLotteryState(keeper *keeper.Keeper, ctx sdk.Context) types.Lotter
 	return item
 }
 
+func createTestClosedLotteryState(keeper *keeper.Keeper, ctx sdk.Context) types.LotteryState {
+	item := types.LotteryState{LotteryState: types.LotteryState_CLOSED}
+	keeper.SetLotteryState(ctx, item)
+	return item
+}
+
+func createTestOpenLotteryState(keeper *keeper.Keeper, ctx sdk.Context) types.LotteryState {
+	item := types.LotteryState{LotteryState: types.LotteryState_OPEN}
+	keeper.SetLotteryState(ctx, item)
+	return item
+}
+
 func TestLotteryStateGet(t *testing.T) {
 	keeper, ctx := keepertest.LotteryKeeper(t)
 	item := createTestLotteryState(keeper, ctx)

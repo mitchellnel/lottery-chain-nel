@@ -10,6 +10,7 @@ service Msg {
       rpc ClaimOwner(MsgClaimOwner) returns (MsgClaimOwnerResponse);
   rpc ChangeOwner(MsgChangeOwner) returns (MsgChangeOwnerResponse);
   rpc SetupLottery(MsgSetupLottery) returns (MsgSetupLotteryResponse);
+  rpc ChangeEntranceFee(MsgChangeEntranceFee) returns (MsgChangeEntranceFeeResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -36,6 +37,15 @@ message MsgSetupLottery {
 }
 
 message MsgSetupLotteryResponse {
+  bool success = 1;
+}
+
+message MsgChangeEntranceFee {
+  string creator = 1;
+  uint64 newEntranceFee = 2;
+}
+
+message MsgChangeEntranceFeeResponse {
   bool success = 1;
 }
 
