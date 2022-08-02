@@ -6,6 +6,7 @@ import "lottery/params.proto";
 import "lottery/owner.proto";
 import "lottery/entrance_fee.proto";
 import "lottery/lottery_state.proto";
+import "lottery/player.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "lottery-chain-nel/x/lottery/types";
@@ -16,5 +17,7 @@ message GenesisState {
   Owner owner = 2;
   EntranceFee entranceFee = 3;
   LotteryState lotteryState = 4;
+  repeated Player playerList = 5 [(gogoproto.nullable) = false];
+  uint64 playerCount = 6;
   // this line is used by starport scaffolding # genesis/proto/state
 }

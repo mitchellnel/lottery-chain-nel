@@ -4,9 +4,10 @@ import { EntranceFee } from "./module/types/lottery/entrance_fee"
 import { LotteryState } from "./module/types/lottery/lottery_state"
 import { Owner } from "./module/types/lottery/owner"
 import { Params } from "./module/types/lottery/params"
+import { Player } from "./module/types/lottery/player"
 
 
-export { EntranceFee, LotteryState, Owner, Params };
+export { EntranceFee, LotteryState, Owner, Params, Player };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -48,12 +49,15 @@ const getDefaultState = () => {
 				Owner: {},
 				EntranceFee: {},
 				LotteryState: {},
+				Player: {},
+				PlayerAll: {},
 				
 				_Structure: {
 						EntranceFee: getStructure(EntranceFee.fromPartial({})),
 						LotteryState: getStructure(LotteryState.fromPartial({})),
 						Owner: getStructure(Owner.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
+						Player: getStructure(Player.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -105,6 +109,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.LotteryState[JSON.stringify(params)] ?? {}
+		},
+				getPlayer: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Player[JSON.stringify(params)] ?? {}
+		},
+				getPlayerAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.PlayerAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -228,6 +244,54 @@ export default {
 		},
 		
 		
+		
+		
+		 		
+		
+		
+		async QueryPlayer({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryPlayer( key.id)).data
+				
+					
+				commit('QUERY', { query: 'Player', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryPlayer', payload: { options: { all }, params: {...key},query }})
+				return getters['getPlayer']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryPlayer API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryPlayerAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryPlayerAll(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryPlayerAll({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'PlayerAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryPlayerAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getPlayerAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryPlayerAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
 		async sendMsgChangeOwner({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -255,6 +319,21 @@ export default {
 					throw new Error('TxClient:MsgChangeEntranceFee:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgChangeEntranceFee:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgClaimOwner({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgClaimOwner(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgClaimOwner:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -288,21 +367,6 @@ export default {
 				}
 			}
 		},
-		async sendMsgClaimOwner({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgClaimOwner(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgClaimOwner:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		
 		async MsgChangeOwner({ rootGetters }, { value }) {
 			try {
@@ -330,6 +394,19 @@ export default {
 				}
 			}
 		},
+		async MsgClaimOwner({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgClaimOwner(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgClaimOwner:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgEnterLottery({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -353,19 +430,6 @@ export default {
 					throw new Error('TxClient:MsgSetupLottery:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgSetupLottery:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgClaimOwner({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgClaimOwner(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgClaimOwner:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgClaimOwner:Create Could not create message: ' + e.message)
 				}
 			}
 		},

@@ -32,3 +32,8 @@ const (
 const (
 	LotteryStateKey = "LotteryState-value-"
 )
+
+const (
+	PlayerKey      = "Player-value-"
+	PlayerCountKey = "Player-count-"
+)

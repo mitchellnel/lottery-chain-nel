@@ -1,0 +1,9 @@
+syntax = "proto3";
+package lotterychainnel.lottery;
+
+option go_package = "lottery-chain-nel/x/lottery/types";
+
+message Player {
+  uint64 id = 1;
+  
+}

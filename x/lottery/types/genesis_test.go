@@ -25,9 +25,44 @@ func TestGenesisState_Validate(t *testing.T) {
 				Owner:        &types.Owner{},
 				EntranceFee:  &types.EntranceFee{},
 				LotteryState: &types.LotteryState{},
+				PlayerList: []types.Player{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				PlayerCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated player",
+			genState: &types.GenesisState{
+				PlayerList: []types.Player{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid player count",
+			genState: &types.GenesisState{
+				PlayerList: []types.Player{
+					{
+						Id: 1,
+					},
+				},
+				PlayerCount: 0,
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	} {

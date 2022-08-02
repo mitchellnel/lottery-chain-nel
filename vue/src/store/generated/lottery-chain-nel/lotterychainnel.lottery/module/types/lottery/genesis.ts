@@ -1,9 +1,11 @@
 /* eslint-disable */
+import * as Long from "long";
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { Params } from "../lottery/params";
 import { Owner } from "../lottery/owner";
 import { EntranceFee } from "../lottery/entrance_fee";
 import { LotteryState } from "../lottery/lottery_state";
-import { Writer, Reader } from "protobufjs/minimal";
+import { Player } from "../lottery/player";
 
 export const protobufPackage = "lotterychainnel.lottery";
 
@@ -12,11 +14,13 @@ export interface GenesisState {
   params: Params | undefined;
   owner: Owner | undefined;
   entranceFee: EntranceFee | undefined;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   lotteryState: LotteryState | undefined;
+  playerList: Player[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  playerCount: number;
 }
 
-const baseGenesisState: object = {};
+const baseGenesisState: object = { playerCount: 0 };
 
 export const GenesisState = {
   encode(message: GenesisState, writer: Writer = Writer.create()): Writer {
@@ -38,6 +42,12 @@ export const GenesisState = {
         writer.uint32(34).fork()
       ).ldelim();
     }
+    for (const v of message.playerList) {
+      Player.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.playerCount !== 0) {
+      writer.uint32(48).uint64(message.playerCount);
+    }
     return writer;
   },
 
@@ -45,6 +55,7 @@ export const GenesisState = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGenesisState } as GenesisState;
+    message.playerList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -60,6 +71,12 @@ export const GenesisState = {
         case 4:
           message.lotteryState = LotteryState.decode(reader, reader.uint32());
           break;
+        case 5:
+          message.playerList.push(Player.decode(reader, reader.uint32()));
+          break;
+        case 6:
+          message.playerCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -70,6 +87,7 @@ export const GenesisState = {
 
   fromJSON(object: any): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
+    message.playerList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -90,6 +108,16 @@ export const GenesisState = {
     } else {
       message.lotteryState = undefined;
     }
+    if (object.playerList !== undefined && object.playerList !== null) {
+      for (const e of object.playerList) {
+        message.playerList.push(Player.fromJSON(e));
+      }
+    }
+    if (object.playerCount !== undefined && object.playerCount !== null) {
+      message.playerCount = Number(object.playerCount);
+    } else {
+      message.playerCount = 0;
+    }
     return message;
   },
 
@@ -107,11 +135,21 @@ export const GenesisState = {
       (obj.lotteryState = message.lotteryState
         ? LotteryState.toJSON(message.lotteryState)
         : undefined);
+    if (message.playerList) {
+      obj.playerList = message.playerList.map((e) =>
+        e ? Player.toJSON(e) : undefined
+      );
+    } else {
+      obj.playerList = [];
+    }
+    message.playerCount !== undefined &&
+      (obj.playerCount = message.playerCount);
     return obj;
   },
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
+    message.playerList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -132,9 +170,29 @@ export const GenesisState = {
     } else {
       message.lotteryState = undefined;
     }
+    if (object.playerList !== undefined && object.playerList !== null) {
+      for (const e of object.playerList) {
+        message.playerList.push(Player.fromPartial(e));
+      }
+    }
+    if (object.playerCount !== undefined && object.playerCount !== null) {
+      message.playerCount = object.playerCount;
+    } else {
+      message.playerCount = 0;
+    }
     return message;
   },
 };
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -146,3 +204,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}
