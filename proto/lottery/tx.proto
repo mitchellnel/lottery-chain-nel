@@ -32,7 +32,7 @@ message MsgChangeOwnerResponse {
 
 message MsgSetupLottery {
   string creator = 1;
-  string entranceFee = 2;
+  uint64 entranceFee = 2;
 }
 
 message MsgSetupLotteryResponse {
