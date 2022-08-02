@@ -24,6 +24,10 @@ export interface LotteryLotteryState {
   lottery_state?: LotteryStateLOTTERYSTATE;
 }
 
+export interface LotteryMsgChangeEntranceFeeResponse {
+  success?: boolean;
+}
+
 export interface LotteryMsgChangeOwnerResponse {
   success?: boolean;
 }

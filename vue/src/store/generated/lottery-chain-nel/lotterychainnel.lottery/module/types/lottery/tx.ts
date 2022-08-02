@@ -30,6 +30,15 @@ export interface MsgSetupLotteryResponse {
   success: boolean;
 }
 
+export interface MsgChangeEntranceFee {
+  creator: string;
+  newEntranceFee: number;
+}
+
+export interface MsgChangeEntranceFeeResponse {
+  success: boolean;
+}
+
 const baseMsgClaimOwner: object = { creator: "" };
 
 export const MsgClaimOwner = {
@@ -416,12 +425,160 @@ export const MsgSetupLotteryResponse = {
   },
 };
 
+const baseMsgChangeEntranceFee: object = { creator: "", newEntranceFee: 0 };
+
+export const MsgChangeEntranceFee = {
+  encode(
+    message: MsgChangeEntranceFee,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.newEntranceFee !== 0) {
+      writer.uint32(16).uint64(message.newEntranceFee);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgChangeEntranceFee {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgChangeEntranceFee } as MsgChangeEntranceFee;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.newEntranceFee = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgChangeEntranceFee {
+    const message = { ...baseMsgChangeEntranceFee } as MsgChangeEntranceFee;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.newEntranceFee !== undefined && object.newEntranceFee !== null) {
+      message.newEntranceFee = Number(object.newEntranceFee);
+    } else {
+      message.newEntranceFee = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgChangeEntranceFee): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.newEntranceFee !== undefined &&
+      (obj.newEntranceFee = message.newEntranceFee);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgChangeEntranceFee>): MsgChangeEntranceFee {
+    const message = { ...baseMsgChangeEntranceFee } as MsgChangeEntranceFee;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.newEntranceFee !== undefined && object.newEntranceFee !== null) {
+      message.newEntranceFee = object.newEntranceFee;
+    } else {
+      message.newEntranceFee = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgChangeEntranceFeeResponse: object = { success: false };
+
+export const MsgChangeEntranceFeeResponse = {
+  encode(
+    message: MsgChangeEntranceFeeResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.success === true) {
+      writer.uint32(8).bool(message.success);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgChangeEntranceFeeResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgChangeEntranceFeeResponse,
+    } as MsgChangeEntranceFeeResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.success = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgChangeEntranceFeeResponse {
+    const message = {
+      ...baseMsgChangeEntranceFeeResponse,
+    } as MsgChangeEntranceFeeResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = Boolean(object.success);
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgChangeEntranceFeeResponse): unknown {
+    const obj: any = {};
+    message.success !== undefined && (obj.success = message.success);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgChangeEntranceFeeResponse>
+  ): MsgChangeEntranceFeeResponse {
+    const message = {
+      ...baseMsgChangeEntranceFeeResponse,
+    } as MsgChangeEntranceFeeResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = object.success;
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   ClaimOwner(request: MsgClaimOwner): Promise<MsgClaimOwnerResponse>;
   ChangeOwner(request: MsgChangeOwner): Promise<MsgChangeOwnerResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SetupLottery(request: MsgSetupLottery): Promise<MsgSetupLotteryResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ChangeEntranceFee(
+    request: MsgChangeEntranceFee
+  ): Promise<MsgChangeEntranceFeeResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -462,6 +619,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgSetupLotteryResponse.decode(new Reader(data))
+    );
+  }
+
+  ChangeEntranceFee(
+    request: MsgChangeEntranceFee
+  ): Promise<MsgChangeEntranceFeeResponse> {
+    const data = MsgChangeEntranceFee.encode(request).finish();
+    const promise = this.rpc.request(
+      "lotterychainnel.lottery.Msg",
+      "ChangeEntranceFee",
+      data
+    );
+    return promise.then((data) =>
+      MsgChangeEntranceFeeResponse.decode(new Reader(data))
     );
   }
 }
