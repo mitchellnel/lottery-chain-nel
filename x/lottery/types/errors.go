@@ -29,7 +29,7 @@ var (
 		4000,
 		"Lottery is not closed",
 	)
-	ErrorLotteryClosed = sdkerrors.Register(
+	ErrLotteryClosed = sdkerrors.Register(
 		ModuleName,
 		4001,
 		"Lottery is closed",
