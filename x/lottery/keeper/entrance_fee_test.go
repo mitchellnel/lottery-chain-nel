@@ -18,6 +18,12 @@ func createTestEntranceFee(keeper *keeper.Keeper, ctx sdk.Context) types.Entranc
 	return item
 }
 
+func createTestEntranceFeeWithValue(keeper *keeper.Keeper, ctx sdk.Context) types.EntranceFee {
+	item := types.EntranceFee{EntranceFee: 44}
+	keeper.SetEntranceFee(ctx, item)
+	return item
+}
+
 func TestEntranceFeeGet(t *testing.T) {
 	keeper, ctx := keepertest.LotteryKeeper(t)
 	item := createTestEntranceFee(keeper, ctx)
