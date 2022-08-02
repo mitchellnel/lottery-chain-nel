@@ -13,6 +13,18 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	if genState.Owner != nil {
 		k.SetOwner(ctx, *genState.Owner)
 	}
+	// Set if defined
+	if genState.EntranceFee != nil {
+		k.SetEntranceFee(ctx, *genState.EntranceFee)
+	}
+	// Set if defined
+	if genState.LotteryState != nil {
+		k.SetLotteryState(ctx, *genState.LotteryState)
+	}
+	// Set all the player
+	for _, elem := range genState.PlayerList {
+		k.SetPlayer(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -27,6 +39,17 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	if found {
 		genesis.Owner = &owner
 	}
+	// Get all entranceFee
+	entranceFee, found := k.GetEntranceFee(ctx)
+	if found {
+		genesis.EntranceFee = &entranceFee
+	}
+	// Get all lotteryState
+	lotteryState, found := k.GetLotteryState(ctx)
+	if found {
+		genesis.LotteryState = &lotteryState
+	}
+	genesis.PlayerList = k.GetAllPlayer(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

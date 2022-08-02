@@ -4,6 +4,9 @@ package lotterychainnel.lottery;
 import "gogoproto/gogo.proto";
 import "lottery/params.proto";
 import "lottery/owner.proto";
+import "lottery/entrance_fee.proto";
+import "lottery/lottery_state.proto";
+import "lottery/player.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "lottery-chain-nel/x/lottery/types";
@@ -12,5 +15,8 @@ option go_package = "lottery-chain-nel/x/lottery/types";
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   Owner owner = 2;
+  EntranceFee entranceFee = 3;
+  LotteryState lotteryState = 4;
+  repeated Player playerList = 5 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

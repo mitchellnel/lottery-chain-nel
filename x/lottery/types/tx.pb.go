@@ -115,28 +115,232 @@ func (m *MsgClaimOwnerResponse) GetSuccess() bool {
 	return false
 }
 
+type MsgChangeOwner struct {
+	Creator  string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	NewOwner string `protobuf:"bytes,2,opt,name=newOwner,proto3" json:"newOwner,omitempty"`
+}
+
+func (m *MsgChangeOwner) Reset()         { *m = MsgChangeOwner{} }
+func (m *MsgChangeOwner) String() string { return proto.CompactTextString(m) }
+func (*MsgChangeOwner) ProtoMessage()    {}
+func (*MsgChangeOwner) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16a4f365e1c6455d, []int{2}
+}
+func (m *MsgChangeOwner) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgChangeOwner) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgChangeOwner.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgChangeOwner) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgChangeOwner.Merge(m, src)
+}
+func (m *MsgChangeOwner) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgChangeOwner) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgChangeOwner.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgChangeOwner proto.InternalMessageInfo
+
+func (m *MsgChangeOwner) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgChangeOwner) GetNewOwner() string {
+	if m != nil {
+		return m.NewOwner
+	}
+	return ""
+}
+
+type MsgChangeOwnerResponse struct {
+	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+}
+
+func (m *MsgChangeOwnerResponse) Reset()         { *m = MsgChangeOwnerResponse{} }
+func (m *MsgChangeOwnerResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgChangeOwnerResponse) ProtoMessage()    {}
+func (*MsgChangeOwnerResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16a4f365e1c6455d, []int{3}
+}
+func (m *MsgChangeOwnerResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgChangeOwnerResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgChangeOwnerResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgChangeOwnerResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgChangeOwnerResponse.Merge(m, src)
+}
+func (m *MsgChangeOwnerResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgChangeOwnerResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgChangeOwnerResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgChangeOwnerResponse proto.InternalMessageInfo
+
+func (m *MsgChangeOwnerResponse) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
+type MsgSetupLottery struct {
+	Creator     string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	EntranceFee uint64 `protobuf:"varint,2,opt,name=entranceFee,proto3" json:"entranceFee,omitempty"`
+}
+
+func (m *MsgSetupLottery) Reset()         { *m = MsgSetupLottery{} }
+func (m *MsgSetupLottery) String() string { return proto.CompactTextString(m) }
+func (*MsgSetupLottery) ProtoMessage()    {}
+func (*MsgSetupLottery) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16a4f365e1c6455d, []int{4}
+}
+func (m *MsgSetupLottery) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetupLottery) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetupLottery.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetupLottery) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetupLottery.Merge(m, src)
+}
+func (m *MsgSetupLottery) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetupLottery) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetupLottery.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetupLottery proto.InternalMessageInfo
+
+func (m *MsgSetupLottery) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgSetupLottery) GetEntranceFee() uint64 {
+	if m != nil {
+		return m.EntranceFee
+	}
+	return 0
+}
+
+type MsgSetupLotteryResponse struct {
+	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+}
+
+func (m *MsgSetupLotteryResponse) Reset()         { *m = MsgSetupLotteryResponse{} }
+func (m *MsgSetupLotteryResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSetupLotteryResponse) ProtoMessage()    {}
+func (*MsgSetupLotteryResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16a4f365e1c6455d, []int{5}
+}
+func (m *MsgSetupLotteryResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetupLotteryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetupLotteryResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetupLotteryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetupLotteryResponse.Merge(m, src)
+}
+func (m *MsgSetupLotteryResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetupLotteryResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetupLotteryResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetupLotteryResponse proto.InternalMessageInfo
+
+func (m *MsgSetupLotteryResponse) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*MsgClaimOwner)(nil), "lotterychainnel.lottery.MsgClaimOwner")
 	proto.RegisterType((*MsgClaimOwnerResponse)(nil), "lotterychainnel.lottery.MsgClaimOwnerResponse")
+	proto.RegisterType((*MsgChangeOwner)(nil), "lotterychainnel.lottery.MsgChangeOwner")
+	proto.RegisterType((*MsgChangeOwnerResponse)(nil), "lotterychainnel.lottery.MsgChangeOwnerResponse")
+	proto.RegisterType((*MsgSetupLottery)(nil), "lotterychainnel.lottery.MsgSetupLottery")
+	proto.RegisterType((*MsgSetupLotteryResponse)(nil), "lotterychainnel.lottery.MsgSetupLotteryResponse")
 }
 
 func init() { proto.RegisterFile("lottery/tx.proto", fileDescriptor_16a4f365e1c6455d) }
 
 var fileDescriptor_16a4f365e1c6455d = []byte{
-	// 203 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xc8, 0xc9, 0x2f, 0x29,
-	0x49, 0x2d, 0xaa, 0xd4, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x87, 0x8a,
-	0x24, 0x67, 0x24, 0x66, 0xe6, 0xe5, 0xa5, 0xe6, 0xe8, 0x41, 0xf9, 0x4a, 0x9a, 0x5c, 0xbc, 0xbe,
-	0xc5, 0xe9, 0xce, 0x39, 0x89, 0x99, 0xb9, 0xfe, 0xe5, 0x79, 0xa9, 0x45, 0x42, 0x12, 0x5c, 0xec,
-	0xc9, 0x45, 0xa9, 0x89, 0x25, 0xf9, 0x45, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x30, 0xae,
-	0x92, 0x21, 0x97, 0x28, 0x8a, 0xd2, 0xa0, 0xd4, 0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54, 0x90, 0x96,
-	0xe2, 0xd2, 0xe4, 0xe4, 0xd4, 0xe2, 0x62, 0xb0, 0x16, 0x8e, 0x20, 0x18, 0xd7, 0x28, 0x9b, 0x8b,
-	0xd9, 0xb7, 0x38, 0x5d, 0x28, 0x85, 0x8b, 0x0b, 0xc9, 0x06, 0x35, 0x3d, 0x1c, 0x8e, 0xd1, 0x43,
-	0x31, 0x5e, 0x4a, 0x8f, 0x38, 0x75, 0x30, 0x67, 0x38, 0x59, 0x9f, 0x78, 0x24, 0xc7, 0x78, 0xe1,
-	0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72, 0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c, 0xc7, 0x70,
-	0xe3, 0xb1, 0x1c, 0x43, 0x94, 0x22, 0x54, 0xa3, 0x2e, 0xd8, 0x24, 0xdd, 0xbc, 0xd4, 0x1c, 0xfd,
-	0x0a, 0x7d, 0x78, 0x18, 0x55, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0xc3, 0xc9, 0x18, 0x10, 0x00,
-	0x00, 0xff, 0xff, 0x04, 0xc1, 0xae, 0xbb, 0x3b, 0x01, 0x00, 0x00,
+	// 321 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x3d, 0x4f, 0xb3, 0x50,
+	0x14, 0x86, 0xbe, 0x6f, 0xb4, 0x9e, 0xfa, 0x15, 0x12, 0x2d, 0x61, 0xb8, 0xa9, 0x0c, 0x5a, 0x87,
+	0x82, 0xb6, 0xa3, 0x9b, 0x26, 0x9d, 0x24, 0x26, 0xb8, 0xb9, 0x21, 0x9e, 0xd0, 0x1a, 0xbc, 0x90,
+	0x7b, 0x6f, 0xd3, 0xf6, 0x5f, 0xf8, 0x93, 0x1c, 0x1d, 0x3b, 0x3a, 0x1a, 0xf8, 0x23, 0xa6, 0x57,
+	0x40, 0x30, 0x91, 0x32, 0x3e, 0x87, 0xe7, 0xe3, 0xf0, 0xdc, 0x03, 0x87, 0x61, 0x24, 0x04, 0xb2,
+	0xa5, 0x2d, 0x16, 0x56, 0xcc, 0x22, 0x11, 0x69, 0xdd, 0x6c, 0xe2, 0x4f, 0xbc, 0x29, 0xa5, 0x18,
+	0x5a, 0x19, 0x36, 0xcf, 0x61, 0xcf, 0xe1, 0xc1, 0x4d, 0xe8, 0x4d, 0x5f, 0xee, 0xe6, 0x14, 0x99,
+	0xa6, 0xc3, 0xb6, 0xcf, 0xd0, 0x13, 0x11, 0xd3, 0xd5, 0x9e, 0xda, 0xdf, 0x71, 0x73, 0x68, 0x5e,
+	0xc2, 0x51, 0x85, 0xea, 0x22, 0x8f, 0x23, 0xca, 0x71, 0x2d, 0xe1, 0x33, 0xdf, 0x47, 0xce, 0xa5,
+	0xa4, 0xed, 0xe6, 0xd0, 0x1c, 0xc3, 0xfe, 0x5a, 0x32, 0xf1, 0x68, 0x80, 0x1b, 0xec, 0x35, 0x03,
+	0xda, 0x14, 0xe7, 0x92, 0xa5, 0xb7, 0xe4, 0xa7, 0x02, 0x9b, 0x43, 0x38, 0xae, 0xfa, 0x34, 0xc8,
+	0x76, 0xe0, 0xc0, 0xe1, 0xc1, 0x3d, 0x8a, 0x59, 0x7c, 0xfb, 0xfd, 0xb3, 0x35, 0xe1, 0x3d, 0xe8,
+	0x20, 0x15, 0xcc, 0xa3, 0x3e, 0x8e, 0x11, 0x65, 0xfe, 0x7f, 0xb7, 0x3c, 0x32, 0x47, 0xd0, 0xfd,
+	0x65, 0xb7, 0x79, 0x87, 0xe1, 0x5b, 0x0b, 0xfe, 0x39, 0x3c, 0xd0, 0x9e, 0x00, 0x4a, 0x15, 0x9f,
+	0x5a, 0x7f, 0xbc, 0x86, 0x55, 0xe9, 0xd7, 0xb0, 0x9a, 0xf1, 0x8a, 0x3d, 0x02, 0xe8, 0x94, 0xab,
+	0x3e, 0xab, 0x95, 0xff, 0x10, 0x0d, 0xbb, 0x21, 0xb1, 0x08, 0x7a, 0x86, 0xdd, 0x4a, 0xaf, 0xfd,
+	0x3a, 0x83, 0x32, 0xd3, 0xb8, 0x68, 0xca, 0xcc, 0xb3, 0xae, 0xaf, 0xde, 0x13, 0xa2, 0xae, 0x12,
+	0xa2, 0x7e, 0x26, 0x44, 0x7d, 0x4d, 0x89, 0xb2, 0x4a, 0x89, 0xf2, 0x91, 0x12, 0xe5, 0xe1, 0x24,
+	0x93, 0x0e, 0xa4, 0xd7, 0x80, 0x62, 0x68, 0x2f, 0xec, 0xe2, 0xf2, 0x97, 0x31, 0xf2, 0xc7, 0x2d,
+	0x79, 0xfd, 0xa3, 0xaf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xde, 0xc8, 0x55, 0x07, 0x11, 0x03, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -152,6 +356,8 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
 	ClaimOwner(ctx context.Context, in *MsgClaimOwner, opts ...grpc.CallOption) (*MsgClaimOwnerResponse, error)
+	ChangeOwner(ctx context.Context, in *MsgChangeOwner, opts ...grpc.CallOption) (*MsgChangeOwnerResponse, error)
+	SetupLottery(ctx context.Context, in *MsgSetupLottery, opts ...grpc.CallOption) (*MsgSetupLotteryResponse, error)
 }
 
 type msgClient struct {
@@ -171,9 +377,29 @@ func (c *msgClient) ClaimOwner(ctx context.Context, in *MsgClaimOwner, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) ChangeOwner(ctx context.Context, in *MsgChangeOwner, opts ...grpc.CallOption) (*MsgChangeOwnerResponse, error) {
+	out := new(MsgChangeOwnerResponse)
+	err := c.cc.Invoke(ctx, "/lotterychainnel.lottery.Msg/ChangeOwner", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) SetupLottery(ctx context.Context, in *MsgSetupLottery, opts ...grpc.CallOption) (*MsgSetupLotteryResponse, error) {
+	out := new(MsgSetupLotteryResponse)
+	err := c.cc.Invoke(ctx, "/lotterychainnel.lottery.Msg/SetupLottery", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	ClaimOwner(context.Context, *MsgClaimOwner) (*MsgClaimOwnerResponse, error)
+	ChangeOwner(context.Context, *MsgChangeOwner) (*MsgChangeOwnerResponse, error)
+	SetupLottery(context.Context, *MsgSetupLottery) (*MsgSetupLotteryResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -182,6 +408,12 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) ClaimOwner(ctx context.Context, req *MsgClaimOwner) (*MsgClaimOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClaimOwner not implemented")
+}
+func (*UnimplementedMsgServer) ChangeOwner(ctx context.Context, req *MsgChangeOwner) (*MsgChangeOwnerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeOwner not implemented")
+}
+func (*UnimplementedMsgServer) SetupLottery(ctx context.Context, req *MsgSetupLottery) (*MsgSetupLotteryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetupLottery not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -206,6 +438,42 @@ func _Msg_ClaimOwner_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_ChangeOwner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgChangeOwner)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ChangeOwner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/lotterychainnel.lottery.Msg/ChangeOwner",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ChangeOwner(ctx, req.(*MsgChangeOwner))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_SetupLottery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetupLottery)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SetupLottery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/lotterychainnel.lottery.Msg/SetupLottery",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SetupLottery(ctx, req.(*MsgSetupLottery))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "lotterychainnel.lottery.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -213,6 +481,14 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClaimOwner",
 			Handler:    _Msg_ClaimOwner_Handler,
+		},
+		{
+			MethodName: "ChangeOwner",
+			Handler:    _Msg_ChangeOwner_Handler,
+		},
+		{
+			MethodName: "SetupLottery",
+			Handler:    _Msg_SetupLottery_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -282,6 +558,144 @@ func (m *MsgClaimOwnerResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgChangeOwner) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgChangeOwner) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgChangeOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NewOwner) > 0 {
+		i -= len(m.NewOwner)
+		copy(dAtA[i:], m.NewOwner)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NewOwner)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgChangeOwnerResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgChangeOwnerResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgChangeOwnerResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Success {
+		i--
+		if m.Success {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetupLottery) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetupLottery) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetupLottery) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.EntranceFee != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.EntranceFee))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetupLotteryResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetupLotteryResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetupLotteryResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Success {
+		i--
+		if m.Success {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -307,6 +721,63 @@ func (m *MsgClaimOwner) Size() (n int) {
 }
 
 func (m *MsgClaimOwnerResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Success {
+		n += 2
+	}
+	return n
+}
+
+func (m *MsgChangeOwner) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NewOwner)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgChangeOwnerResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Success {
+		n += 2
+	}
+	return n
+}
+
+func (m *MsgSetupLottery) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.EntranceFee != 0 {
+		n += 1 + sovTx(uint64(m.EntranceFee))
+	}
+	return n
+}
+
+func (m *MsgSetupLotteryResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -433,6 +904,361 @@ func (m *MsgClaimOwnerResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgClaimOwnerResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Success", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Success = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgChangeOwner) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgChangeOwner: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgChangeOwner: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewOwner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NewOwner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgChangeOwnerResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgChangeOwnerResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgChangeOwnerResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Success", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Success = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetupLottery) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetupLottery: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetupLottery: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EntranceFee", wireType)
+			}
+			m.EntranceFee = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.EntranceFee |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetupLotteryResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetupLotteryResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetupLotteryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

@@ -6,6 +6,9 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "lottery/params.proto";
 import "lottery/owner.proto";
+import "lottery/entrance_fee.proto";
+import "lottery/lottery_state.proto";
+import "lottery/player.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "lottery-chain-nel/x/lottery/types";
@@ -20,6 +23,24 @@ service Query {
 	rpc Owner(QueryGetOwnerRequest) returns (QueryGetOwnerResponse) {
 		option (google.api.http).get = "/lottery-chain-nel/lottery/owner";
 	}
+// Queries a EntranceFee by index.
+	rpc EntranceFee(QueryGetEntranceFeeRequest) returns (QueryGetEntranceFeeResponse) {
+		option (google.api.http).get = "/lottery-chain-nel/lottery/entrance_fee";
+	}
+// Queries a LotteryState by index.
+	rpc LotteryState(QueryGetLotteryStateRequest) returns (QueryGetLotteryStateResponse) {
+		option (google.api.http).get = "/lottery-chain-nel/lottery/lottery_state";
+	}
+// Queries a Player by index.
+	rpc Player(QueryGetPlayerRequest) returns (QueryGetPlayerResponse) {
+		option (google.api.http).get = "/lottery-chain-nel/lottery/player/{address}";
+	}
+
+	// Queries a list of Player items.
+	rpc PlayerAll(QueryAllPlayerRequest) returns (QueryAllPlayerResponse) {
+		option (google.api.http).get = "/lottery-chain-nel/lottery/player";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -37,4 +58,32 @@ message QueryGetOwnerRequest {}
 message QueryGetOwnerResponse {
 	Owner Owner = 1 [(gogoproto.nullable) = false];
 }
+message QueryGetEntranceFeeRequest {}
+
+message QueryGetEntranceFeeResponse {
+	EntranceFee EntranceFee = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetLotteryStateRequest {}
+
+message QueryGetLotteryStateResponse {
+	LotteryState LotteryState = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetPlayerRequest {
+	  string address = 1;
+
+}
+
+message QueryGetPlayerResponse {
+	Player player = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPlayerRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPlayerResponse {
+	repeated Player player = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
 // this line is used by starport scaffolding # 3
