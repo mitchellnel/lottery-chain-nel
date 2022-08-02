@@ -51857,6 +51857,11 @@ definitions:
     properties:
       success:
         type: boolean
+  lotterychainnel.lottery.MsgSetupLotteryResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
   lotterychainnel.lottery.Owner:
     type: object
     properties:

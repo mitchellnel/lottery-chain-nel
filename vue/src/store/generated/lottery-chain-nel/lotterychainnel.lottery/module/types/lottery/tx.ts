@@ -20,6 +20,15 @@ export interface MsgChangeOwnerResponse {
   success: boolean;
 }
 
+export interface MsgSetupLottery {
+  creator: string;
+  entranceFee: string;
+}
+
+export interface MsgSetupLotteryResponse {
+  success: boolean;
+}
+
 const baseMsgClaimOwner: object = { creator: "" };
 
 export const MsgClaimOwner = {
@@ -267,11 +276,151 @@ export const MsgChangeOwnerResponse = {
   },
 };
 
+const baseMsgSetupLottery: object = { creator: "", entranceFee: "" };
+
+export const MsgSetupLottery = {
+  encode(message: MsgSetupLottery, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.entranceFee !== "") {
+      writer.uint32(18).string(message.entranceFee);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetupLottery {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetupLottery } as MsgSetupLottery;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.entranceFee = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetupLottery {
+    const message = { ...baseMsgSetupLottery } as MsgSetupLottery;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.entranceFee !== undefined && object.entranceFee !== null) {
+      message.entranceFee = String(object.entranceFee);
+    } else {
+      message.entranceFee = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetupLottery): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.entranceFee !== undefined &&
+      (obj.entranceFee = message.entranceFee);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgSetupLottery>): MsgSetupLottery {
+    const message = { ...baseMsgSetupLottery } as MsgSetupLottery;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.entranceFee !== undefined && object.entranceFee !== null) {
+      message.entranceFee = object.entranceFee;
+    } else {
+      message.entranceFee = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSetupLotteryResponse: object = { success: false };
+
+export const MsgSetupLotteryResponse = {
+  encode(
+    message: MsgSetupLotteryResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.success === true) {
+      writer.uint32(8).bool(message.success);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetupLotteryResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSetupLotteryResponse,
+    } as MsgSetupLotteryResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.success = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetupLotteryResponse {
+    const message = {
+      ...baseMsgSetupLotteryResponse,
+    } as MsgSetupLotteryResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = Boolean(object.success);
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetupLotteryResponse): unknown {
+    const obj: any = {};
+    message.success !== undefined && (obj.success = message.success);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSetupLotteryResponse>
+  ): MsgSetupLotteryResponse {
+    const message = {
+      ...baseMsgSetupLotteryResponse,
+    } as MsgSetupLotteryResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = object.success;
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   ClaimOwner(request: MsgClaimOwner): Promise<MsgClaimOwnerResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   ChangeOwner(request: MsgChangeOwner): Promise<MsgChangeOwnerResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SetupLottery(request: MsgSetupLottery): Promise<MsgSetupLotteryResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -300,6 +449,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgChangeOwnerResponse.decode(new Reader(data))
+    );
+  }
+
+  SetupLottery(request: MsgSetupLottery): Promise<MsgSetupLotteryResponse> {
+    const data = MsgSetupLottery.encode(request).finish();
+    const promise = this.rpc.request(
+      "lotterychainnel.lottery.Msg",
+      "SetupLottery",
+      data
+    );
+    return promise.then((data) =>
+      MsgSetupLotteryResponse.decode(new Reader(data))
     );
   }
 }

@@ -9,6 +9,7 @@ option go_package = "lottery-chain-nel/x/lottery/types";
 service Msg {
       rpc ClaimOwner(MsgClaimOwner) returns (MsgClaimOwnerResponse);
   rpc ChangeOwner(MsgChangeOwner) returns (MsgChangeOwnerResponse);
+  rpc SetupLottery(MsgSetupLottery) returns (MsgSetupLotteryResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -26,6 +27,15 @@ message MsgChangeOwner {
 }
 
 message MsgChangeOwnerResponse {
+  bool success = 1;
+}
+
+message MsgSetupLottery {
+  string creator = 1;
+  string entranceFee = 2;
+}
+
+message MsgSetupLotteryResponse {
   bool success = 1;
 }
 
