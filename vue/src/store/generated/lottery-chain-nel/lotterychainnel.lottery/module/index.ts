@@ -4,14 +4,14 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgSetupLottery } from "./types/lottery/tx";
 import { MsgClaimOwner } from "./types/lottery/tx";
+import { MsgSetupLottery } from "./types/lottery/tx";
 import { MsgChangeOwner } from "./types/lottery/tx";
 
 
 const types = [
-  ["/lotterychainnel.lottery.MsgSetupLottery", MsgSetupLottery],
   ["/lotterychainnel.lottery.MsgClaimOwner", MsgClaimOwner],
+  ["/lotterychainnel.lottery.MsgSetupLottery", MsgSetupLottery],
   ["/lotterychainnel.lottery.MsgChangeOwner", MsgChangeOwner],
   
 ];
@@ -45,8 +45,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgSetupLottery: (data: MsgSetupLottery): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgSetupLottery", value: MsgSetupLottery.fromPartial( data ) }),
     msgClaimOwner: (data: MsgClaimOwner): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgClaimOwner", value: MsgClaimOwner.fromPartial( data ) }),
+    msgSetupLottery: (data: MsgSetupLottery): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgSetupLottery", value: MsgSetupLottery.fromPartial( data ) }),
     msgChangeOwner: (data: MsgChangeOwner): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgChangeOwner", value: MsgChangeOwner.fromPartial( data ) }),
     
   };
