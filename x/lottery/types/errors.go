@@ -12,4 +12,10 @@ var (
 	ErrLotteryNotOwned     = sdkerrors.Register(ModuleName, 1001, "Lottery does not have an owner")
 
 	ErrNotOwner = sdkerrors.Register(ModuleName, 2000, "You are not the lottery owner")
+
+	ErrLotteryAlreadySetup = sdkerrors.Register(
+		ModuleName,
+		3000,
+		"Lottery has already been setup before",
+	)
 )
