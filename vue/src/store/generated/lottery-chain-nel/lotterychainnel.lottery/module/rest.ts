@@ -9,12 +9,20 @@
  * ---------------------------------------------------------------
  */
 
+export enum LotteryStateLOTTERYSTATE {
+  CLOSED = "CLOSED",
+  CALCULATING_WINNER = "CALCULATING_WINNER",
+  OPEN = "OPEN",
+}
+
 export interface LotteryEntranceFee {
   /** @format uint64 */
   entrance_fee?: string;
 }
 
-export type LotteryLotteryState = object;
+export interface LotteryLotteryState {
+  lottery_state?: LotteryStateLOTTERYSTATE;
+}
 
 export interface LotteryMsgChangeEntranceFeeResponse {
   success?: boolean;
