@@ -55,6 +55,14 @@ export interface MsgStartLotteryResponse {
   success: boolean;
 }
 
+export interface MsgEndLottery {
+  creator: string;
+}
+
+export interface MsgEndLotteryResponse {
+  success: boolean;
+}
+
 const baseMsgClaimOwner: object = { creator: "" };
 
 export const MsgClaimOwner = {
@@ -828,6 +836,121 @@ export const MsgStartLotteryResponse = {
   },
 };
 
+const baseMsgEndLottery: object = { creator: "" };
+
+export const MsgEndLottery = {
+  encode(message: MsgEndLottery, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgEndLottery {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgEndLottery } as MsgEndLottery;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgEndLottery {
+    const message = { ...baseMsgEndLottery } as MsgEndLottery;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgEndLottery): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgEndLottery>): MsgEndLottery {
+    const message = { ...baseMsgEndLottery } as MsgEndLottery;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgEndLotteryResponse: object = { success: false };
+
+export const MsgEndLotteryResponse = {
+  encode(
+    message: MsgEndLotteryResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.success === true) {
+      writer.uint32(8).bool(message.success);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgEndLotteryResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgEndLotteryResponse } as MsgEndLotteryResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.success = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgEndLotteryResponse {
+    const message = { ...baseMsgEndLotteryResponse } as MsgEndLotteryResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = Boolean(object.success);
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgEndLotteryResponse): unknown {
+    const obj: any = {};
+    message.success !== undefined && (obj.success = message.success);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgEndLotteryResponse>
+  ): MsgEndLotteryResponse {
+    const message = { ...baseMsgEndLotteryResponse } as MsgEndLotteryResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = object.success;
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   ClaimOwner(request: MsgClaimOwner): Promise<MsgClaimOwnerResponse>;
@@ -837,8 +960,9 @@ export interface Msg {
     request: MsgChangeEntranceFee
   ): Promise<MsgChangeEntranceFeeResponse>;
   EnterLottery(request: MsgEnterLottery): Promise<MsgEnterLotteryResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   StartLottery(request: MsgStartLottery): Promise<MsgStartLotteryResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  EndLottery(request: MsgEndLottery): Promise<MsgEndLotteryResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -917,6 +1041,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgStartLotteryResponse.decode(new Reader(data))
+    );
+  }
+
+  EndLottery(request: MsgEndLottery): Promise<MsgEndLotteryResponse> {
+    const data = MsgEndLottery.encode(request).finish();
+    const promise = this.rpc.request(
+      "lotterychainnel.lottery.Msg",
+      "EndLottery",
+      data
+    );
+    return promise.then((data) =>
+      MsgEndLotteryResponse.decode(new Reader(data))
     );
   }
 }
