@@ -34,6 +34,16 @@ var (
 		4001,
 		"Lottery is closed",
 	)
+	ErrLotteryNotOpen = sdkerrors.Register(
+		ModuleName,
+		4010,
+		"Lottery is not open",
+	)
+	ErrLotteryOpen = sdkerrors.Register(
+		ModuleName,
+		4011,
+		"Lottery is open",
+	)
 
 	ErrPlayerAlreadyEntered = sdkerrors.Register(
 		ModuleName,

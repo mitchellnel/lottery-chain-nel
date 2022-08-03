@@ -14,6 +14,7 @@ func DefaultGenesis() *GenesisState {
 		EntranceFee:  nil,
 		LotteryState: nil,
 		PlayerList:   []Player{},
+		LastWinner:   nil,
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}

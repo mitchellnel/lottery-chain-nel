@@ -1,0 +1,12 @@
+THIS FILE NEEDS TO BE MANUALLY UPDATED EVERY TIME THE CHAIN IS RESTARTED FROM A BRAND-NEW GENESIS
+ BLOCK, i.e `ignite chain serve -r` HAS BEEN INVOKED
+
+!! READ ABOVE !!
+!! READ ABOVE !!
+!! READ ABOVE !!
+
+alice = cosmos1mx890km00pc3kucu42a6ctkw8zd6q933vw5fjj
+bob = cosmos1f97ff0aev77zwe4cgar7hn822y5f0n929w5azq
+lewis = cosmos15hdxdz4l9hkx8wqsje6pjg3utl9e80vm3phwvd
+george = cosmos1lrmke3jegjl534nh5pyv9yuv83lq0uft0dxqnn
+valtteri = cosmos10wv4df79lf7256ga05834j6p5xkavt7l695xp5

@@ -3,12 +3,13 @@ package keeper_test
 import (
 	"testing"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/stretchr/testify/require"
 	keepertest "lottery-chain-nel/testutil/keeper"
 	"lottery-chain-nel/testutil/nullify"
 	"lottery-chain-nel/x/lottery/keeper"
 	"lottery-chain-nel/x/lottery/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/stretchr/testify/require"
 )
 
 func createNPlayer(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.Player {
@@ -49,6 +50,16 @@ func TestPlayerGetAll(t *testing.T) {
 		nullify.Fill(items),
 		nullify.Fill(keeper.GetAllPlayer(ctx)),
 	)
+}
+
+func TestPlayerRemoveAll(t *testing.T) {
+	keeper, ctx := keepertest.LotteryKeeper(t)
+	_ = createNPlayer(keeper, ctx, 10)
+
+	keeper.RemoveAllPlayer(ctx)
+
+	require.Equal(t, uint64(0), keeper.GetPlayerCount(ctx))
+	require.Empty(t, keeper.GetAllPlayer(ctx))
 }
 
 func TestPlayerCount(t *testing.T) {

@@ -34,6 +34,7 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				PlayerCount: 2,
+				LastWinner:  &types.LastWinner{},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,

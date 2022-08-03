@@ -3,9 +3,10 @@ package keeper
 import (
 	"encoding/binary"
 
+	"lottery-chain-nel/x/lottery/types"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 // GetPlayerCount get the total number of player
@@ -91,6 +92,17 @@ func (k Keeper) GetAllPlayer(ctx sdk.Context) (list []types.Player) {
 	}
 
 	return
+}
+
+// RemoveAllPlayer clears the list and removes all players from the store
+func (k Keeper) RemoveAllPlayer(ctx sdk.Context) {
+	players := k.GetAllPlayer(ctx)
+
+	for _, player := range players {
+		k.RemovePlayer(ctx, player.Id)
+	}
+
+	k.SetPlayerCount(ctx, uint64(0))
 }
 
 // GetPlayerIDBytes returns the byte representation of the ID

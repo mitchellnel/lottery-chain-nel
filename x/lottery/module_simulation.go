@@ -44,6 +44,14 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgEnterLottery int = 100
 
+	opWeightMsgStartLottery = "op_weight_msg_start_lottery"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgStartLottery int = 100
+
+	opWeightMsgEndLottery = "op_weight_msg_end_lottery"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgEndLottery int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -131,6 +139,28 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgEnterLottery,
 		lotterysimulation.SimulateMsgEnterLottery(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgStartLottery int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgStartLottery, &weightMsgStartLottery, nil,
+		func(_ *rand.Rand) {
+			weightMsgStartLottery = defaultWeightMsgStartLottery
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgStartLottery,
+		lotterysimulation.SimulateMsgStartLottery(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgEndLottery int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgEndLottery, &weightMsgEndLottery, nil,
+		func(_ *rand.Rand) {
+			weightMsgEndLottery = defaultWeightMsgEndLottery
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgEndLottery,
+		lotterysimulation.SimulateMsgEndLottery(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
