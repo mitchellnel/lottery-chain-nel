@@ -14,4 +14,13 @@ func TestEnterLottery(t *testing.T) {
 	msgServer := keeper.NewMsgServerImpl(*k)
 
 	_, _, _, _ = k, ctx, wctx, msgServer
+
+	// MARK: there is no good documentation on how to write integration tests for Cosmos SDK-built
+	// apps
+
+	// Was given https://github.com/cosmos/b9-checkers-academy-draft/tree/v1-main as an example for
+	// tests, but it has so many additional files for the testing, and I don't know what they do,
+	// so right now, I'm ignoring integration testing for the enter-lottery message
+
+	// I'll just test using the command line when the chain is served
 }
