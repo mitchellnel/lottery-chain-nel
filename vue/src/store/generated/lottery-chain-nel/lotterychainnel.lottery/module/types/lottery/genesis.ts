@@ -6,6 +6,7 @@ import { Owner } from "../lottery/owner";
 import { EntranceFee } from "../lottery/entrance_fee";
 import { LotteryState } from "../lottery/lottery_state";
 import { Player } from "../lottery/player";
+import { LastWinner } from "../lottery/last_winner";
 
 export const protobufPackage = "lotterychainnel.lottery";
 
@@ -16,8 +17,9 @@ export interface GenesisState {
   entranceFee: EntranceFee | undefined;
   lotteryState: LotteryState | undefined;
   playerList: Player[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   playerCount: number;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  lastWinner: LastWinner | undefined;
 }
 
 const baseGenesisState: object = { playerCount: 0 };
@@ -48,6 +50,9 @@ export const GenesisState = {
     if (message.playerCount !== 0) {
       writer.uint32(48).uint64(message.playerCount);
     }
+    if (message.lastWinner !== undefined) {
+      LastWinner.encode(message.lastWinner, writer.uint32(58).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -76,6 +81,9 @@ export const GenesisState = {
           break;
         case 6:
           message.playerCount = longToNumber(reader.uint64() as Long);
+          break;
+        case 7:
+          message.lastWinner = LastWinner.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -118,6 +126,11 @@ export const GenesisState = {
     } else {
       message.playerCount = 0;
     }
+    if (object.lastWinner !== undefined && object.lastWinner !== null) {
+      message.lastWinner = LastWinner.fromJSON(object.lastWinner);
+    } else {
+      message.lastWinner = undefined;
+    }
     return message;
   },
 
@@ -144,6 +157,10 @@ export const GenesisState = {
     }
     message.playerCount !== undefined &&
       (obj.playerCount = message.playerCount);
+    message.lastWinner !== undefined &&
+      (obj.lastWinner = message.lastWinner
+        ? LastWinner.toJSON(message.lastWinner)
+        : undefined);
     return obj;
   },
 
@@ -179,6 +196,11 @@ export const GenesisState = {
       message.playerCount = object.playerCount;
     } else {
       message.playerCount = 0;
+    }
+    if (object.lastWinner !== undefined && object.lastWinner !== null) {
+      message.lastWinner = LastWinner.fromPartial(object.lastWinner);
+    } else {
+      message.lastWinner = undefined;
     }
     return message;
   },

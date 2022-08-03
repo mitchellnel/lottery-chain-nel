@@ -28,6 +28,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set player count
 	k.SetPlayerCount(ctx, genState.PlayerCount)
+	// Set if defined
+	if genState.LastWinner != nil {
+		k.SetLastWinner(ctx, *genState.LastWinner)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -54,6 +58,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	}
 	genesis.PlayerList = k.GetAllPlayer(ctx)
 	genesis.PlayerCount = k.GetPlayerCount(ctx)
+	// Get all lastWinner
+	lastWinner, found := k.GetLastWinner(ctx)
+	if found {
+		genesis.LastWinner = &lastWinner
+	}
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

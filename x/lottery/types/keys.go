@@ -37,3 +37,7 @@ const (
 	PlayerKey      = "Player-value-"
 	PlayerCountKey = "Player-count-"
 )
+
+const (
+	LastWinnerKey = "LastWinner-value-"
+)

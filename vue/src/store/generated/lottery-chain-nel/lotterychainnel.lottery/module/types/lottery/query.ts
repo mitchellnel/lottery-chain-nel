@@ -10,6 +10,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
+import { LastWinner } from "../lottery/last_winner";
 
 export const protobufPackage = "lotterychainnel.lottery";
 
@@ -55,6 +56,12 @@ export interface QueryAllPlayerRequest {
 export interface QueryAllPlayerResponse {
   Player: Player[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryGetLastWinnerRequest {}
+
+export interface QueryGetLastWinnerResponse {
+  LastWinner: LastWinner | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -783,6 +790,130 @@ export const QueryAllPlayerResponse = {
   },
 };
 
+const baseQueryGetLastWinnerRequest: object = {};
+
+export const QueryGetLastWinnerRequest = {
+  encode(
+    _: QueryGetLastWinnerRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetLastWinnerRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetLastWinnerRequest,
+    } as QueryGetLastWinnerRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetLastWinnerRequest {
+    const message = {
+      ...baseQueryGetLastWinnerRequest,
+    } as QueryGetLastWinnerRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetLastWinnerRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryGetLastWinnerRequest>
+  ): QueryGetLastWinnerRequest {
+    const message = {
+      ...baseQueryGetLastWinnerRequest,
+    } as QueryGetLastWinnerRequest;
+    return message;
+  },
+};
+
+const baseQueryGetLastWinnerResponse: object = {};
+
+export const QueryGetLastWinnerResponse = {
+  encode(
+    message: QueryGetLastWinnerResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.LastWinner !== undefined) {
+      LastWinner.encode(message.LastWinner, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetLastWinnerResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetLastWinnerResponse,
+    } as QueryGetLastWinnerResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.LastWinner = LastWinner.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetLastWinnerResponse {
+    const message = {
+      ...baseQueryGetLastWinnerResponse,
+    } as QueryGetLastWinnerResponse;
+    if (object.LastWinner !== undefined && object.LastWinner !== null) {
+      message.LastWinner = LastWinner.fromJSON(object.LastWinner);
+    } else {
+      message.LastWinner = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetLastWinnerResponse): unknown {
+    const obj: any = {};
+    message.LastWinner !== undefined &&
+      (obj.LastWinner = message.LastWinner
+        ? LastWinner.toJSON(message.LastWinner)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetLastWinnerResponse>
+  ): QueryGetLastWinnerResponse {
+    const message = {
+      ...baseQueryGetLastWinnerResponse,
+    } as QueryGetLastWinnerResponse;
+    if (object.LastWinner !== undefined && object.LastWinner !== null) {
+      message.LastWinner = LastWinner.fromPartial(object.LastWinner);
+    } else {
+      message.LastWinner = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -801,6 +932,10 @@ export interface Query {
   Player(request: QueryGetPlayerRequest): Promise<QueryGetPlayerResponse>;
   /** Queries a list of Player items. */
   PlayerAll(request: QueryAllPlayerRequest): Promise<QueryAllPlayerResponse>;
+  /** Queries a LastWinner by index. */
+  LastWinner(
+    request: QueryGetLastWinnerRequest
+  ): Promise<QueryGetLastWinnerResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -879,6 +1014,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllPlayerResponse.decode(new Reader(data))
+    );
+  }
+
+  LastWinner(
+    request: QueryGetLastWinnerRequest
+  ): Promise<QueryGetLastWinnerResponse> {
+    const data = QueryGetLastWinnerRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "lotterychainnel.lottery.Query",
+      "LastWinner",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetLastWinnerResponse.decode(new Reader(data))
     );
   }
 }

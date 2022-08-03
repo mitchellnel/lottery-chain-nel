@@ -20,6 +20,8 @@ export interface LotteryEntranceFee {
   entrance_fee?: string;
 }
 
+export type LotteryLastWinner = object;
+
 export interface LotteryLotteryState {
   lottery_state?: LotteryStateLOTTERYSTATE;
 }
@@ -84,6 +86,10 @@ export interface LotteryQueryAllPlayerResponse {
 
 export interface LotteryQueryGetEntranceFeeResponse {
   EntranceFee?: LotteryEntranceFee;
+}
+
+export interface LotteryQueryGetLastWinnerResponse {
+  LastWinner?: LotteryLastWinner;
 }
 
 export interface LotteryQueryGetLotteryStateResponse {
@@ -387,6 +393,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryEntranceFee = (params: RequestParams = {}) =>
     this.request<LotteryQueryGetEntranceFeeResponse, RpcStatus>({
       path: `/lottery-chain-nel/lottery/entrance_fee`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryLastWinner
+   * @summary Queries a LastWinner by index.
+   * @request GET:/lottery-chain-nel/lottery/last_winner
+   */
+  queryLastWinner = (params: RequestParams = {}) =>
+    this.request<LotteryQueryGetLastWinnerResponse, RpcStatus>({
+      path: `/lottery-chain-nel/lottery/last_winner`,
       method: "GET",
       format: "json",
       ...params,

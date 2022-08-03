@@ -26,6 +26,7 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		PlayerCount: 2,
+		LastWinner:  &types.LastWinner{},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -42,5 +43,6 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.LotteryState, got.LotteryState)
 	require.ElementsMatch(t, genesisState.PlayerList, got.PlayerList)
 	require.Equal(t, genesisState.PlayerCount, got.PlayerCount)
+	require.Equal(t, genesisState.LastWinner, got.LastWinner)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
