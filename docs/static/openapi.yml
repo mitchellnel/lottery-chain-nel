@@ -29966,11 +29966,14 @@ paths:
           schema:
             type: object
             properties:
-              player:
+              Player:
                 type: array
                 items:
                   type: object
                   properties:
+                    id:
+                      type: string
+                      format: uint64
                     address:
                       type: string
               pagination:
@@ -30077,9 +30080,9 @@ paths:
           type: boolean
       tags:
         - Query
-  '/lottery-chain-nel/lottery/player/{address}':
+  '/lottery-chain-nel/lottery/player/{id}':
     get:
-      summary: Queries a Player by index.
+      summary: Queries a Player by id.
       operationId: LotterychainnelLotteryPlayer
       responses:
         '200':
@@ -30087,9 +30090,12 @@ paths:
           schema:
             type: object
             properties:
-              player:
+              Player:
                 type: object
                 properties:
+                  id:
+                    type: string
+                    format: uint64
                   address:
                     type: string
         default:
@@ -30111,10 +30117,11 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: address
+        - name: id
           in: path
           required: true
           type: string
+          format: uint64
       tags:
         - Query
   /tendermint/spn/claim/airdrop_supply:
@@ -51847,12 +51854,22 @@ definitions:
       - CALCULATING_WINNER
       - OPEN
     default: CLOSED
+  lotterychainnel.lottery.MsgChangeEntranceFeeResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
   lotterychainnel.lottery.MsgChangeOwnerResponse:
     type: object
     properties:
       success:
         type: boolean
   lotterychainnel.lottery.MsgClaimOwnerResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+  lotterychainnel.lottery.MsgEnterLotteryResponse:
     type: object
     properties:
       success:
@@ -51873,16 +51890,22 @@ definitions:
   lotterychainnel.lottery.Player:
     type: object
     properties:
+      id:
+        type: string
+        format: uint64
       address:
         type: string
   lotterychainnel.lottery.QueryAllPlayerResponse:
     type: object
     properties:
-      player:
+      Player:
         type: array
         items:
           type: object
           properties:
+            id:
+              type: string
+              format: uint64
             address:
               type: string
       pagination:
@@ -51943,9 +51966,12 @@ definitions:
   lotterychainnel.lottery.QueryGetPlayerResponse:
     type: object
     properties:
-      player:
+      Player:
         type: object
         properties:
+          id:
+            type: string
+            format: uint64
           address:
             type: string
   lotterychainnel.lottery.QueryParamsResponse:

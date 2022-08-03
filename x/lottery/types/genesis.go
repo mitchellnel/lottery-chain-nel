@@ -22,15 +22,17 @@ func DefaultGenesis() *GenesisState {
 // Validate performs basic genesis state validation returning an error upon any
 // failure.
 func (gs GenesisState) Validate() error {
-	// Check for duplicated index in player
-	playerIndexMap := make(map[string]struct{})
-
+	// Check for duplicated ID in player
+	playerIdMap := make(map[uint64]bool)
+	playerCount := gs.GetPlayerCount()
 	for _, elem := range gs.PlayerList {
-		index := string(PlayerKey(elem.Address))
-		if _, ok := playerIndexMap[index]; ok {
-			return fmt.Errorf("duplicated index for player")
+		if _, ok := playerIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for player")
 		}
-		playerIndexMap[index] = struct{}{}
+		if elem.Id >= playerCount {
+			return fmt.Errorf("player id should be lower or equal than the last id")
+		}
+		playerIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

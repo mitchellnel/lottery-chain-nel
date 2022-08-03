@@ -40,6 +40,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgChangeEntranceFee int = 100
 
+	opWeightMsgEnterLottery = "op_weight_msg_enter_lottery"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgEnterLottery int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -116,6 +120,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgChangeEntranceFee,
 		lotterysimulation.SimulateMsgChangeEntranceFee(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgEnterLottery int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgEnterLottery, &weightMsgEnterLottery, nil,
+		func(_ *rand.Rand) {
+			weightMsgEnterLottery = defaultWeightMsgEnterLottery
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgEnterLottery,
+		lotterysimulation.SimulateMsgEnterLottery(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

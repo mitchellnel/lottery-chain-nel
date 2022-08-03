@@ -31,9 +31,9 @@ service Query {
 	rpc LotteryState(QueryGetLotteryStateRequest) returns (QueryGetLotteryStateResponse) {
 		option (google.api.http).get = "/lottery-chain-nel/lottery/lottery_state";
 	}
-// Queries a Player by index.
+// Queries a Player by id.
 	rpc Player(QueryGetPlayerRequest) returns (QueryGetPlayerResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/player/{address}";
+		option (google.api.http).get = "/lottery-chain-nel/lottery/player/{id}";
 	}
 
 	// Queries a list of Player items.
@@ -69,12 +69,11 @@ message QueryGetLotteryStateResponse {
 	LotteryState LotteryState = 1 [(gogoproto.nullable) = false];
 }
 message QueryGetPlayerRequest {
-	  string address = 1;
-
+	uint64 id = 1;
 }
 
 message QueryGetPlayerResponse {
-	Player player = 1 [(gogoproto.nullable) = false];
+	Player Player = 1 [(gogoproto.nullable) = false];
 }
 
 message QueryAllPlayerRequest {
@@ -82,7 +81,7 @@ message QueryAllPlayerRequest {
 }
 
 message QueryAllPlayerResponse {
-	repeated Player player = 1 [(gogoproto.nullable) = false];
+	repeated Player Player = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

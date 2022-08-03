@@ -19,12 +19,13 @@ func TestGenesis(t *testing.T) {
 		LotteryState: &types.LotteryState{},
 		PlayerList: []types.Player{
 			{
-				Address: "0",
+				Id: 0,
 			},
 			{
-				Address: "1",
+				Id: 1,
 			},
 		},
+		PlayerCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -40,5 +41,6 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.EntranceFee, got.EntranceFee)
 	require.Equal(t, genesisState.LotteryState, got.LotteryState)
 	require.ElementsMatch(t, genesisState.PlayerList, got.PlayerList)
+	require.Equal(t, genesisState.PlayerCount, got.PlayerCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

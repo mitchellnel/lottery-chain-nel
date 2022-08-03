@@ -4,7 +4,6 @@ package lotterychainnel.lottery;
 option go_package = "lottery-chain-nel/x/lottery/types";
 
 message Player {
-  string address = 1; 
-  
+  uint64 id = 1;
+  string address = 2;
 }
-

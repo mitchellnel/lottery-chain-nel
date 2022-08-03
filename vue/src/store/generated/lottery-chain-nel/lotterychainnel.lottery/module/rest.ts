@@ -36,6 +36,10 @@ export interface LotteryMsgClaimOwnerResponse {
   success?: boolean;
 }
 
+export interface LotteryMsgEnterLotteryResponse {
+  success?: boolean;
+}
+
 export interface LotteryMsgSetupLotteryResponse {
   success?: boolean;
 }
@@ -50,11 +54,13 @@ export interface LotteryOwner {
 export type LotteryParams = object;
 
 export interface LotteryPlayer {
+  /** @format uint64 */
+  id?: string;
   address?: string;
 }
 
 export interface LotteryQueryAllPlayerResponse {
-  player?: LotteryPlayer[];
+  Player?: LotteryPlayer[];
 
   /**
    * PageResponse is to be embedded in gRPC response messages where the
@@ -81,7 +87,7 @@ export interface LotteryQueryGetOwnerResponse {
 }
 
 export interface LotteryQueryGetPlayerResponse {
-  player?: LotteryPlayer;
+  Player?: LotteryPlayer;
 }
 
 /**
@@ -457,12 +463,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryPlayer
-   * @summary Queries a Player by index.
-   * @request GET:/lottery-chain-nel/lottery/player/{address}
+   * @summary Queries a Player by id.
+   * @request GET:/lottery-chain-nel/lottery/player/{id}
    */
-  queryPlayer = (address: string, params: RequestParams = {}) =>
+  queryPlayer = (id: string, params: RequestParams = {}) =>
     this.request<LotteryQueryGetPlayerResponse, RpcStatus>({
-      path: `/lottery-chain-nel/lottery/player/${address}`,
+      path: `/lottery-chain-nel/lottery/player/${id}`,
       method: "GET",
       format: "json",
       ...params,

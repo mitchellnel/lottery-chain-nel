@@ -1,10 +1,10 @@
 package keeper_test
 
 import (
-	"strconv"
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
@@ -14,9 +14,6 @@ import (
 	"lottery-chain-nel/testutil/nullify"
 	"lottery-chain-nel/x/lottery/types"
 )
-
-// Prevent strconv unused error
-var _ = strconv.IntSize
 
 func TestPlayerQuerySingle(t *testing.T) {
 	keeper, ctx := keepertest.LotteryKeeper(t)
@@ -29,25 +26,19 @@ func TestPlayerQuerySingle(t *testing.T) {
 		err      error
 	}{
 		{
-			desc: "First",
-			request: &types.QueryGetPlayerRequest{
-				Address: msgs[0].Address,
-			},
+			desc:     "First",
+			request:  &types.QueryGetPlayerRequest{Id: msgs[0].Id},
 			response: &types.QueryGetPlayerResponse{Player: msgs[0]},
 		},
 		{
-			desc: "Second",
-			request: &types.QueryGetPlayerRequest{
-				Address: msgs[1].Address,
-			},
+			desc:     "Second",
+			request:  &types.QueryGetPlayerRequest{Id: msgs[1].Id},
 			response: &types.QueryGetPlayerResponse{Player: msgs[1]},
 		},
 		{
-			desc: "KeyNotFound",
-			request: &types.QueryGetPlayerRequest{
-				Address: strconv.Itoa(100000),
-			},
-			err: status.Error(codes.NotFound, "not found"),
+			desc:    "KeyNotFound",
+			request: &types.QueryGetPlayerRequest{Id: uint64(len(msgs))},
+			err:     sdkerrors.ErrKeyNotFound,
 		},
 		{
 			desc: "InvalidRequest",

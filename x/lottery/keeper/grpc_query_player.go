@@ -5,6 +5,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -20,7 +21,7 @@ func (k Keeper) PlayerAll(c context.Context, req *types.QueryAllPlayerRequest) (
 	ctx := sdk.UnwrapSDKContext(c)
 
 	store := ctx.KVStore(k.storeKey)
-	playerStore := prefix.NewStore(store, types.KeyPrefix(types.PlayerKeyPrefix))
+	playerStore := prefix.NewStore(store, types.KeyPrefix(types.PlayerKey))
 
 	pageRes, err := query.Paginate(playerStore, req.Pagination, func(key []byte, value []byte) error {
 		var player types.Player
@@ -43,15 +44,12 @@ func (k Keeper) Player(c context.Context, req *types.QueryGetPlayerRequest) (*ty
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
-	ctx := sdk.UnwrapSDKContext(c)
 
-	val, found := k.GetPlayer(
-		ctx,
-		req.Address,
-	)
+	ctx := sdk.UnwrapSDKContext(c)
+	player, found := k.GetPlayer(ctx, req.Id)
 	if !found {
-		return nil, status.Error(codes.NotFound, "not found")
+		return nil, sdkerrors.ErrKeyNotFound
 	}
 
-	return &types.QueryGetPlayerResponse{Player: val}, nil
+	return &types.QueryGetPlayerResponse{Player: player}, nil
 }

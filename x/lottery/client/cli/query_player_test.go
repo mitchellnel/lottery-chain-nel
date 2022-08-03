@@ -2,7 +2,6 @@ package cli_test
 
 import (
 	"fmt"
-	"strconv"
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -18,9 +17,6 @@ import (
 	"lottery-chain-nel/x/lottery/types"
 )
 
-// Prevent strconv unused error
-var _ = strconv.IntSize
-
 func networkWithPlayerObjects(t *testing.T, n int) (*network.Network, []types.Player) {
 	t.Helper()
 	cfg := network.DefaultConfig()
@@ -29,7 +25,7 @@ func networkWithPlayerObjects(t *testing.T, n int) (*network.Network, []types.Pl
 
 	for i := 0; i < n; i++ {
 		player := types.Player{
-			Address: strconv.Itoa(i),
+			Id: uint64(i),
 		}
 		nullify.Fill(&player)
 		state.PlayerList = append(state.PlayerList, player)
@@ -48,32 +44,28 @@ func TestShowPlayer(t *testing.T) {
 		fmt.Sprintf("--%s=json", tmcli.OutputFlag),
 	}
 	for _, tc := range []struct {
-		desc      string
-		idAddress string
-
+		desc string
+		id   string
 		args []string
 		err  error
 		obj  types.Player
 	}{
 		{
-			desc:      "found",
-			idAddress: objs[0].Address,
-
+			desc: "found",
+			id:   fmt.Sprintf("%d", objs[0].Id),
 			args: common,
 			obj:  objs[0],
 		},
 		{
-			desc:      "not found",
-			idAddress: strconv.Itoa(100000),
-
+			desc: "not found",
+			id:   "not_found",
 			args: common,
 			err:  status.Error(codes.NotFound, "not found"),
 		},
 	} {
+		tc := tc
 		t.Run(tc.desc, func(t *testing.T) {
-			args := []string{
-				tc.idAddress,
-			}
+			args := []string{tc.id}
 			args = append(args, tc.args...)
 			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowPlayer(), args)
 			if tc.err != nil {

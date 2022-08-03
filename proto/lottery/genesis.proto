@@ -18,5 +18,6 @@ message GenesisState {
   EntranceFee entranceFee = 3;
   LotteryState lotteryState = 4;
   repeated Player playerList = 5 [(gogoproto.nullable) = false];
+  uint64 playerCount = 6;
   // this line is used by starport scaffolding # genesis/proto/state
 }

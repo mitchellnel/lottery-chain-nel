@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
+import { Reader, util, configure, Writer } from "protobufjs/minimal";
+import * as Long from "long";
 import { Params } from "../lottery/params";
 import { Owner } from "../lottery/owner";
 import { EntranceFee } from "../lottery/entrance_fee";
@@ -40,11 +41,11 @@ export interface QueryGetLotteryStateResponse {
 }
 
 export interface QueryGetPlayerRequest {
-  address: string;
+  id: number;
 }
 
 export interface QueryGetPlayerResponse {
-  player: Player | undefined;
+  Player: Player | undefined;
 }
 
 export interface QueryAllPlayerRequest {
@@ -52,7 +53,7 @@ export interface QueryAllPlayerRequest {
 }
 
 export interface QueryAllPlayerResponse {
-  player: Player[];
+  Player: Player[];
   pagination: PageResponse | undefined;
 }
 
@@ -506,15 +507,15 @@ export const QueryGetLotteryStateResponse = {
   },
 };
 
-const baseQueryGetPlayerRequest: object = { address: "" };
+const baseQueryGetPlayerRequest: object = { id: 0 };
 
 export const QueryGetPlayerRequest = {
   encode(
     message: QueryGetPlayerRequest,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.address !== "") {
-      writer.uint32(10).string(message.address);
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
@@ -527,7 +528,7 @@ export const QueryGetPlayerRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.address = reader.string();
+          message.id = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -539,17 +540,17 @@ export const QueryGetPlayerRequest = {
 
   fromJSON(object: any): QueryGetPlayerRequest {
     const message = { ...baseQueryGetPlayerRequest } as QueryGetPlayerRequest;
-    if (object.address !== undefined && object.address !== null) {
-      message.address = String(object.address);
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
     } else {
-      message.address = "";
+      message.id = 0;
     }
     return message;
   },
 
   toJSON(message: QueryGetPlayerRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    message.id !== undefined && (obj.id = message.id);
     return obj;
   },
 
@@ -557,10 +558,10 @@ export const QueryGetPlayerRequest = {
     object: DeepPartial<QueryGetPlayerRequest>
   ): QueryGetPlayerRequest {
     const message = { ...baseQueryGetPlayerRequest } as QueryGetPlayerRequest;
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
     } else {
-      message.address = "";
+      message.id = 0;
     }
     return message;
   },
@@ -573,8 +574,8 @@ export const QueryGetPlayerResponse = {
     message: QueryGetPlayerResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.player !== undefined) {
-      Player.encode(message.player, writer.uint32(10).fork()).ldelim();
+    if (message.Player !== undefined) {
+      Player.encode(message.Player, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -587,7 +588,7 @@ export const QueryGetPlayerResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.player = Player.decode(reader, reader.uint32());
+          message.Player = Player.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -599,18 +600,18 @@ export const QueryGetPlayerResponse = {
 
   fromJSON(object: any): QueryGetPlayerResponse {
     const message = { ...baseQueryGetPlayerResponse } as QueryGetPlayerResponse;
-    if (object.player !== undefined && object.player !== null) {
-      message.player = Player.fromJSON(object.player);
+    if (object.Player !== undefined && object.Player !== null) {
+      message.Player = Player.fromJSON(object.Player);
     } else {
-      message.player = undefined;
+      message.Player = undefined;
     }
     return message;
   },
 
   toJSON(message: QueryGetPlayerResponse): unknown {
     const obj: any = {};
-    message.player !== undefined &&
-      (obj.player = message.player ? Player.toJSON(message.player) : undefined);
+    message.Player !== undefined &&
+      (obj.Player = message.Player ? Player.toJSON(message.Player) : undefined);
     return obj;
   },
 
@@ -618,10 +619,10 @@ export const QueryGetPlayerResponse = {
     object: DeepPartial<QueryGetPlayerResponse>
   ): QueryGetPlayerResponse {
     const message = { ...baseQueryGetPlayerResponse } as QueryGetPlayerResponse;
-    if (object.player !== undefined && object.player !== null) {
-      message.player = Player.fromPartial(object.player);
+    if (object.Player !== undefined && object.Player !== null) {
+      message.Player = Player.fromPartial(object.Player);
     } else {
-      message.player = undefined;
+      message.Player = undefined;
     }
     return message;
   },
@@ -697,7 +698,7 @@ export const QueryAllPlayerResponse = {
     message: QueryAllPlayerResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    for (const v of message.player) {
+    for (const v of message.Player) {
       Player.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.pagination !== undefined) {
@@ -713,12 +714,12 @@ export const QueryAllPlayerResponse = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllPlayerResponse } as QueryAllPlayerResponse;
-    message.player = [];
+    message.Player = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.player.push(Player.decode(reader, reader.uint32()));
+          message.Player.push(Player.decode(reader, reader.uint32()));
           break;
         case 2:
           message.pagination = PageResponse.decode(reader, reader.uint32());
@@ -733,10 +734,10 @@ export const QueryAllPlayerResponse = {
 
   fromJSON(object: any): QueryAllPlayerResponse {
     const message = { ...baseQueryAllPlayerResponse } as QueryAllPlayerResponse;
-    message.player = [];
-    if (object.player !== undefined && object.player !== null) {
-      for (const e of object.player) {
-        message.player.push(Player.fromJSON(e));
+    message.Player = [];
+    if (object.Player !== undefined && object.Player !== null) {
+      for (const e of object.Player) {
+        message.Player.push(Player.fromJSON(e));
       }
     }
     if (object.pagination !== undefined && object.pagination !== null) {
@@ -749,12 +750,12 @@ export const QueryAllPlayerResponse = {
 
   toJSON(message: QueryAllPlayerResponse): unknown {
     const obj: any = {};
-    if (message.player) {
-      obj.player = message.player.map((e) =>
+    if (message.Player) {
+      obj.Player = message.Player.map((e) =>
         e ? Player.toJSON(e) : undefined
       );
     } else {
-      obj.player = [];
+      obj.Player = [];
     }
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
@@ -767,10 +768,10 @@ export const QueryAllPlayerResponse = {
     object: DeepPartial<QueryAllPlayerResponse>
   ): QueryAllPlayerResponse {
     const message = { ...baseQueryAllPlayerResponse } as QueryAllPlayerResponse;
-    message.player = [];
-    if (object.player !== undefined && object.player !== null) {
-      for (const e of object.player) {
-        message.player.push(Player.fromPartial(e));
+    message.Player = [];
+    if (object.Player !== undefined && object.Player !== null) {
+      for (const e of object.Player) {
+        message.Player.push(Player.fromPartial(e));
       }
     }
     if (object.pagination !== undefined && object.pagination !== null) {
@@ -796,7 +797,7 @@ export interface Query {
   LotteryState(
     request: QueryGetLotteryStateRequest
   ): Promise<QueryGetLotteryStateResponse>;
-  /** Queries a Player by index. */
+  /** Queries a Player by id. */
   Player(request: QueryGetPlayerRequest): Promise<QueryGetPlayerResponse>;
   /** Queries a list of Player items. */
   PlayerAll(request: QueryAllPlayerRequest): Promise<QueryAllPlayerResponse>;
@@ -890,6 +891,16 @@ interface Rpc {
   ): Promise<Uint8Array>;
 }
 
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
+
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
@@ -900,3 +911,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -44,18 +45,21 @@ func CmdListPlayer() *cobra.Command {
 
 func CmdShowPlayer() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-player [address]",
+		Use:   "show-player [id]",
 		Short: "shows a player",
 		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			argAddress := args[0]
+			id, err := strconv.ParseUint(args[0], 10, 64)
+			if err != nil {
+				return err
+			}
 
 			params := &types.QueryGetPlayerRequest{
-				Address: argAddress,
+				Id: id,
 			}
 
 			res, err := queryClient.Player(context.Background(), params)

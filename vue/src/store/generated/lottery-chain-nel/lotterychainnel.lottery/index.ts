@@ -253,7 +253,7 @@ export default {
 			try {
 				const key = params ?? {};
 				const queryClient=await initQueryClient(rootGetters)
-				let value= (await queryClient.queryPlayer( key.address)).data
+				let value= (await queryClient.queryPlayer( key.id)).data
 				
 					
 				commit('QUERY', { query: 'Player', key: { params: {...key}, query}, value })
@@ -292,6 +292,21 @@ export default {
 		},
 		
 		
+		async sendMsgChangeOwner({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgChangeOwner(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgChangeOwner:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgChangeOwner:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgClaimOwner({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -322,6 +337,21 @@ export default {
 				}
 			}
 		},
+		async sendMsgEnterLottery({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgEnterLottery(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgEnterLottery:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgEnterLottery:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgSetupLottery({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -337,22 +367,20 @@ export default {
 				}
 			}
 		},
-		async sendMsgChangeOwner({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		async MsgChangeOwner({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgChangeOwner(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgChangeOwner:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgChangeOwner:Send Could not broadcast Tx: '+ e.message)
+				} else{
+					throw new Error('TxClient:MsgChangeOwner:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		
 		async MsgClaimOwner({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -379,6 +407,19 @@ export default {
 				}
 			}
 		},
+		async MsgEnterLottery({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgEnterLottery(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgEnterLottery:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgEnterLottery:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgSetupLottery({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -389,19 +430,6 @@ export default {
 					throw new Error('TxClient:MsgSetupLottery:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgSetupLottery:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgChangeOwner({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgChangeOwner(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgChangeOwner:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgChangeOwner:Create Could not create message: ' + e.message)
 				}
 			}
 		},
