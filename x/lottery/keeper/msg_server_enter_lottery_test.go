@@ -22,5 +22,8 @@ func TestEnterLottery(t *testing.T) {
 	// tests, but it has so many additional files for the testing, and I don't know what they do,
 	// so right now, I'm ignoring integration testing for the enter-lottery message
 
+	// Basically, my issue is that enter-lottery also interacts with the bank module, and I have no
+	// way to simulate the bank module right now
+
 	// I'll just test using the command line when the chain is served
 }
