@@ -3,12 +3,17 @@ import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "lotterychainnel.lottery";
 
-export interface LastWinner {}
+export interface LastWinner {
+  address: string;
+}
 
-const baseLastWinner: object = {};
+const baseLastWinner: object = { address: "" };
 
 export const LastWinner = {
-  encode(_: LastWinner, writer: Writer = Writer.create()): Writer {
+  encode(message: LastWinner, writer: Writer = Writer.create()): Writer {
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
     return writer;
   },
 
@@ -19,6 +24,9 @@ export const LastWinner = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.address = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -27,18 +35,29 @@ export const LastWinner = {
     return message;
   },
 
-  fromJSON(_: any): LastWinner {
+  fromJSON(object: any): LastWinner {
     const message = { ...baseLastWinner } as LastWinner;
+    if (object.address !== undefined && object.address !== null) {
+      message.address = String(object.address);
+    } else {
+      message.address = "";
+    }
     return message;
   },
 
-  toJSON(_: LastWinner): unknown {
+  toJSON(message: LastWinner): unknown {
     const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
     return obj;
   },
 
-  fromPartial(_: DeepPartial<LastWinner>): LastWinner {
+  fromPartial(object: DeepPartial<LastWinner>): LastWinner {
     const message = { ...baseLastWinner } as LastWinner;
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    } else {
+      message.address = "";
+    }
     return message;
   },
 };

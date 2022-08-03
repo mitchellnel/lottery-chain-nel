@@ -20,7 +20,9 @@ export interface LotteryEntranceFee {
   entrance_fee?: string;
 }
 
-export type LotteryLastWinner = object;
+export interface LotteryLastWinner {
+  address?: string;
+}
 
 export interface LotteryLotteryState {
   lottery_state?: LotteryStateLOTTERYSTATE;

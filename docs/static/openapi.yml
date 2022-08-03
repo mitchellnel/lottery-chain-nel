@@ -29857,6 +29857,9 @@ paths:
             properties:
               LastWinner:
                 type: object
+                properties:
+                  address:
+                    type: string
         default:
           description: An unexpected error response.
           schema:
@@ -51871,6 +51874,9 @@ definitions:
         format: uint64
   lotterychainnel.lottery.LastWinner:
     type: object
+    properties:
+      address:
+        type: string
   lotterychainnel.lottery.LotteryState:
     type: object
     properties:
@@ -51991,6 +51997,9 @@ definitions:
     properties:
       LastWinner:
         type: object
+        properties:
+          address:
+            type: string
   lotterychainnel.lottery.QueryGetLotteryStateResponse:
     type: object
     properties:
