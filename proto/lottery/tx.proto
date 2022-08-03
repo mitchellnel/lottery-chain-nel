@@ -12,6 +12,7 @@ service Msg {
   rpc SetupLottery(MsgSetupLottery) returns (MsgSetupLotteryResponse);
   rpc ChangeEntranceFee(MsgChangeEntranceFee) returns (MsgChangeEntranceFeeResponse);
   rpc EnterLottery(MsgEnterLottery) returns (MsgEnterLotteryResponse);
+  rpc StartLottery(MsgStartLottery) returns (MsgStartLotteryResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -55,6 +56,14 @@ message MsgEnterLottery {
 }
 
 message MsgEnterLotteryResponse {
+  bool success = 1;
+}
+
+message MsgStartLottery {
+  string creator = 1;
+}
+
+message MsgStartLotteryResponse {
   bool success = 1;
 }
 
