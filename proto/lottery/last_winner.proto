@@ -4,5 +4,5 @@ package lotterychainnel.lottery;
 option go_package = "lottery-chain-nel/x/lottery/types";
 
 message LastWinner {
-  
+    string address = 1;
 }
