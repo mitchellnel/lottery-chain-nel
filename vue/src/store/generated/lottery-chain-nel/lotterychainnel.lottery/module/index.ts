@@ -5,16 +5,16 @@ import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
 import { MsgChangeOwner } from "./types/lottery/tx";
-import { MsgChangeEntranceFee } from "./types/lottery/tx";
 import { MsgClaimOwner } from "./types/lottery/tx";
+import { MsgChangeEntranceFee } from "./types/lottery/tx";
 import { MsgEnterLottery } from "./types/lottery/tx";
 import { MsgSetupLottery } from "./types/lottery/tx";
 
 
 const types = [
   ["/lotterychainnel.lottery.MsgChangeOwner", MsgChangeOwner],
-  ["/lotterychainnel.lottery.MsgChangeEntranceFee", MsgChangeEntranceFee],
   ["/lotterychainnel.lottery.MsgClaimOwner", MsgClaimOwner],
+  ["/lotterychainnel.lottery.MsgChangeEntranceFee", MsgChangeEntranceFee],
   ["/lotterychainnel.lottery.MsgEnterLottery", MsgEnterLottery],
   ["/lotterychainnel.lottery.MsgSetupLottery", MsgSetupLottery],
   
@@ -50,8 +50,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
     msgChangeOwner: (data: MsgChangeOwner): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgChangeOwner", value: MsgChangeOwner.fromPartial( data ) }),
-    msgChangeEntranceFee: (data: MsgChangeEntranceFee): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgChangeEntranceFee", value: MsgChangeEntranceFee.fromPartial( data ) }),
     msgClaimOwner: (data: MsgClaimOwner): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgClaimOwner", value: MsgClaimOwner.fromPartial( data ) }),
+    msgChangeEntranceFee: (data: MsgChangeEntranceFee): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgChangeEntranceFee", value: MsgChangeEntranceFee.fromPartial( data ) }),
     msgEnterLottery: (data: MsgEnterLottery): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgEnterLottery", value: MsgEnterLottery.fromPartial( data ) }),
     msgSetupLottery: (data: MsgSetupLottery): EncodeObject => ({ typeUrl: "/lotterychainnel.lottery.MsgSetupLottery", value: MsgSetupLottery.fromPartial( data ) }),
     

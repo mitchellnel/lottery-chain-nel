@@ -56,6 +56,7 @@ export type LotteryParams = object;
 export interface LotteryPlayer {
   /** @format uint64 */
   id?: string;
+  address?: string;
 }
 
 export interface LotteryQueryAllPlayerResponse {

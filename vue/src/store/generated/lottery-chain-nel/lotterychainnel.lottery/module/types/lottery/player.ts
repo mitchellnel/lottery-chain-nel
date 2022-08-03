@@ -6,14 +6,18 @@ export const protobufPackage = "lotterychainnel.lottery";
 
 export interface Player {
   id: number;
+  address: string;
 }
 
-const basePlayer: object = { id: 0 };
+const basePlayer: object = { id: 0, address: "" };
 
 export const Player = {
   encode(message: Player, writer: Writer = Writer.create()): Writer {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
+    }
+    if (message.address !== "") {
+      writer.uint32(18).string(message.address);
     }
     return writer;
   },
@@ -27,6 +31,9 @@ export const Player = {
       switch (tag >>> 3) {
         case 1:
           message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 2:
+          message.address = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -43,12 +50,18 @@ export const Player = {
     } else {
       message.id = 0;
     }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = String(object.address);
+    } else {
+      message.address = "";
+    }
     return message;
   },
 
   toJSON(message: Player): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
+    message.address !== undefined && (obj.address = message.address);
     return obj;
   },
 
@@ -58,6 +71,11 @@ export const Player = {
       message.id = object.id;
     } else {
       message.id = 0;
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    } else {
+      message.address = "";
     }
     return message;
   },

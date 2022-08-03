@@ -29974,6 +29974,8 @@ paths:
                     id:
                       type: string
                       format: uint64
+                    address:
+                      type: string
               pagination:
                 type: object
                 properties:
@@ -30094,6 +30096,8 @@ paths:
                   id:
                     type: string
                     format: uint64
+                  address:
+                    type: string
         default:
           description: An unexpected error response.
           schema:
@@ -51889,6 +51893,8 @@ definitions:
       id:
         type: string
         format: uint64
+      address:
+        type: string
   lotterychainnel.lottery.QueryAllPlayerResponse:
     type: object
     properties:
@@ -51900,6 +51906,8 @@ definitions:
             id:
               type: string
               format: uint64
+            address:
+              type: string
       pagination:
         type: object
         properties:
@@ -51964,6 +51972,8 @@ definitions:
           id:
             type: string
             format: uint64
+          address:
+            type: string
   lotterychainnel.lottery.QueryParamsResponse:
     type: object
     properties:
