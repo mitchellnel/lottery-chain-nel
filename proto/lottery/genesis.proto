@@ -10,7 +10,7 @@ import "lottery/player.proto";
 import "lottery/last_winner.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
-option go_package = "lottery-chain-nel/x/lottery/types";
+option go_package = "github.com/mitchellnel/lottery-chain-nel/x/lottery/types";
 
 // GenesisState defines the lottery module's genesis state.
 message GenesisState {

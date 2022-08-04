@@ -3,7 +3,7 @@ package keeper
 import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 // SetEntranceFee set entranceFee in the store

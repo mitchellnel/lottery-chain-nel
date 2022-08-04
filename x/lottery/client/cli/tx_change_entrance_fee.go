@@ -6,9 +6,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 var _ = strconv.Itoa(0)

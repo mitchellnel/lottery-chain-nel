@@ -9,9 +9,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"lottery-chain-nel/testutil/sample"
-	lotterysimulation "lottery-chain-nel/x/lottery/simulation"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/sample"
+	lotterysimulation "github.com/mitchellnel/lottery-chain-nel/x/lottery/simulation"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 // avoid unused import issue
@@ -83,7 +83,9 @@ func (am AppModule) RandomizedParams(_ *rand.Rand) []simtypes.ParamChange {
 func (am AppModule) RegisterStoreDecoder(_ sdk.StoreDecoderRegistry) {}
 
 // WeightedOperations returns the all the gov module operations with their respective weights.
-func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
+func (am AppModule) WeightedOperations(
+	simState module.SimulationState,
+) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
 
 	var weightMsgClaimOwner int
@@ -98,7 +100,11 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	))
 
 	var weightMsgChangeOwner int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgChangeOwner, &weightMsgChangeOwner, nil,
+	simState.AppParams.GetOrGenerate(
+		simState.Cdc,
+		opWeightMsgChangeOwner,
+		&weightMsgChangeOwner,
+		nil,
 		func(_ *rand.Rand) {
 			weightMsgChangeOwner = defaultWeightMsgChangeOwner
 		},
@@ -109,7 +115,11 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	))
 
 	var weightMsgSetupLottery int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSetupLottery, &weightMsgSetupLottery, nil,
+	simState.AppParams.GetOrGenerate(
+		simState.Cdc,
+		opWeightMsgSetupLottery,
+		&weightMsgSetupLottery,
+		nil,
 		func(_ *rand.Rand) {
 			weightMsgSetupLottery = defaultWeightMsgSetupLottery
 		},
@@ -120,7 +130,11 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	))
 
 	var weightMsgChangeEntranceFee int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgChangeEntranceFee, &weightMsgChangeEntranceFee, nil,
+	simState.AppParams.GetOrGenerate(
+		simState.Cdc,
+		opWeightMsgChangeEntranceFee,
+		&weightMsgChangeEntranceFee,
+		nil,
 		func(_ *rand.Rand) {
 			weightMsgChangeEntranceFee = defaultWeightMsgChangeEntranceFee
 		},
@@ -131,7 +145,11 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	))
 
 	var weightMsgEnterLottery int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgEnterLottery, &weightMsgEnterLottery, nil,
+	simState.AppParams.GetOrGenerate(
+		simState.Cdc,
+		opWeightMsgEnterLottery,
+		&weightMsgEnterLottery,
+		nil,
 		func(_ *rand.Rand) {
 			weightMsgEnterLottery = defaultWeightMsgEnterLottery
 		},
@@ -142,7 +160,11 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	))
 
 	var weightMsgStartLottery int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgStartLottery, &weightMsgStartLottery, nil,
+	simState.AppParams.GetOrGenerate(
+		simState.Cdc,
+		opWeightMsgStartLottery,
+		&weightMsgStartLottery,
+		nil,
 		func(_ *rand.Rand) {
 			weightMsgStartLottery = defaultWeightMsgStartLottery
 		},

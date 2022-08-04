@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	keepertest "lottery-chain-nel/testutil/keeper"
-	"lottery-chain-nel/testutil/nullify"
-	"lottery-chain-nel/x/lottery/types"
+	keepertest "github.com/mitchellnel/lottery-chain-nel/testutil/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/nullify"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 func TestPlayerQuerySingle(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

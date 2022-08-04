@@ -2,7 +2,7 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 // GetParams get all parameters as types.Params

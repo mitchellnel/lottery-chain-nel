@@ -9,12 +9,12 @@ import (
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	typesparams "github.com/cosmos/cosmos-sdk/x/params/types"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/stretchr/testify/require"
 	"github.com/tendermint/tendermint/libs/log"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmdb "github.com/tendermint/tm-db"
-	"lottery-chain-nel/x/lottery/keeper"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 func LotteryKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {

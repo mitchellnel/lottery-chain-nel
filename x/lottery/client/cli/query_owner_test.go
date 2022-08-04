@@ -9,10 +9,10 @@ import (
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	"google.golang.org/grpc/status"
 
-	"lottery-chain-nel/testutil/network"
-	"lottery-chain-nel/testutil/nullify"
-	"lottery-chain-nel/x/lottery/client/cli"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/network"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/nullify"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/client/cli"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 func networkWithOwnerObjects(t *testing.T) (*network.Network, types.Owner) {

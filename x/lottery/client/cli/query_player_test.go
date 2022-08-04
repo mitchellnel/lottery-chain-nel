@@ -11,10 +11,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"lottery-chain-nel/testutil/network"
-	"lottery-chain-nel/testutil/nullify"
-	"lottery-chain-nel/x/lottery/client/cli"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/network"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/nullify"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/client/cli"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 func networkWithPlayerObjects(t *testing.T, n int) (*network.Network, []types.Player) {

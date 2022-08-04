@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/sample"
 	"github.com/stretchr/testify/require"
-	"lottery-chain-nel/testutil/sample"
 )
 
 func TestMsgEnterLottery_ValidateBasic(t *testing.T) {

@@ -3,9 +3,9 @@ package keeper_test
 import (
 	"testing"
 
+	testkeeper "github.com/mitchellnel/lottery-chain-nel/testutil/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/stretchr/testify/require"
-	testkeeper "lottery-chain-nel/testutil/keeper"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 func TestGetParams(t *testing.T) {

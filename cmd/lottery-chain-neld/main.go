@@ -5,7 +5,7 @@ import (
 
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/ignite/cli/ignite/pkg/cosmoscmd"
-	"lottery-chain-nel/app"
+	"github.com/mitchellnel/lottery-chain-nel/app"
 )
 
 func main() {

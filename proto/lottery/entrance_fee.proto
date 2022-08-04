@@ -1,7 +1,7 @@
 syntax = "proto3";
 package lotterychainnel.lottery;
 
-option go_package = "lottery-chain-nel/x/lottery/types";
+option go_package = "github.com/mitchellnel/lottery-chain-nel/x/lottery/types";
 
 message EntranceFee {
     uint64 entrance_fee = 1;

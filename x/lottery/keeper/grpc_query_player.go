@@ -7,12 +7,15 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/types/query"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"lottery-chain-nel/x/lottery/types"
 )
 
-func (k Keeper) PlayerAll(c context.Context, req *types.QueryAllPlayerRequest) (*types.QueryAllPlayerResponse, error) {
+func (k Keeper) PlayerAll(
+	c context.Context,
+	req *types.QueryAllPlayerRequest,
+) (*types.QueryAllPlayerResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -23,15 +26,19 @@ func (k Keeper) PlayerAll(c context.Context, req *types.QueryAllPlayerRequest) (
 	store := ctx.KVStore(k.storeKey)
 	playerStore := prefix.NewStore(store, types.KeyPrefix(types.PlayerKey))
 
-	pageRes, err := query.Paginate(playerStore, req.Pagination, func(key []byte, value []byte) error {
-		var player types.Player
-		if err := k.cdc.Unmarshal(value, &player); err != nil {
-			return err
-		}
+	pageRes, err := query.Paginate(
+		playerStore,
+		req.Pagination,
+		func(key []byte, value []byte) error {
+			var player types.Player
+			if err := k.cdc.Unmarshal(value, &player); err != nil {
+				return err
+			}
 
-		players = append(players, player)
-		return nil
-	})
+			players = append(players, player)
+			return nil
+		},
+	)
 
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
@@ -40,7 +47,10 @@ func (k Keeper) PlayerAll(c context.Context, req *types.QueryAllPlayerRequest) (
 	return &types.QueryAllPlayerResponse{Player: players, Pagination: pageRes}, nil
 }
 
-func (k Keeper) Player(c context.Context, req *types.QueryGetPlayerRequest) (*types.QueryGetPlayerResponse, error) {
+func (k Keeper) Player(
+	c context.Context,
+	req *types.QueryGetPlayerRequest,
+) (*types.QueryGetPlayerResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}

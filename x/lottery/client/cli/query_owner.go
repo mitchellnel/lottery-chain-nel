@@ -5,8 +5,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/spf13/cobra"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 func CmdShowOwner() *cobra.Command {

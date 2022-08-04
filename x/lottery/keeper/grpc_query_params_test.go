@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	testkeeper "github.com/mitchellnel/lottery-chain-nel/testutil/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/stretchr/testify/require"
-	testkeeper "lottery-chain-nel/testutil/keeper"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 func TestParamsQuery(t *testing.T) {
