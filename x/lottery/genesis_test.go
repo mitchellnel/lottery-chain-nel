@@ -3,11 +3,11 @@ package lottery_test
 import (
 	"testing"
 
+	keepertest "github.com/mitchellnel/lottery-chain-nel/testutil/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/nullify"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/stretchr/testify/require"
-	keepertest "lottery-chain-nel/testutil/keeper"
-	"lottery-chain-nel/testutil/nullify"
-	"lottery-chain-nel/x/lottery"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 func TestGenesis(t *testing.T) {

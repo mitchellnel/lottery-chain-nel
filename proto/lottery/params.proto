@@ -3,7 +3,7 @@ package lotterychainnel.lottery;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "lottery-chain-nel/x/lottery/types";
+option go_package = "github.com/mitchellnel/lottery-chain-nel/x/lottery/types";
 
 // Params defines the parameters for the module.
 message Params {

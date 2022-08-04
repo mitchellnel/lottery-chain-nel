@@ -6,10 +6,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	keepertest "lottery-chain-nel/testutil/keeper"
-	"lottery-chain-nel/testutil/nullify"
-	"lottery-chain-nel/x/lottery/keeper"
-	"lottery-chain-nel/x/lottery/types"
+	keepertest "github.com/mitchellnel/lottery-chain-nel/testutil/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/testutil/nullify"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 func createTestOwner(keeper *keeper.Keeper, ctx sdk.Context) types.Owner {

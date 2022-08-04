@@ -3,8 +3,8 @@ package types_test
 import (
 	"testing"
 
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 	"github.com/stretchr/testify/require"
-	"lottery-chain-nel/x/lottery/types"
 )
 
 func TestGenesisState_Validate(t *testing.T) {

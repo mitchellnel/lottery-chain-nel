@@ -12,39 +12,39 @@ import "lottery/player.proto";
 import "lottery/last_winner.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "lottery-chain-nel/x/lottery/types";
+option go_package = "github.com/mitchellnel/lottery-chain-nel/x/lottery/types";
 
 // Query defines the gRPC querier service.
 service Query {
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/lottery-chain-nel/lottery/params";
+    option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/params";
   }
   // Queries a Owner by index.
 	rpc Owner(QueryGetOwnerRequest) returns (QueryGetOwnerResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/owner";
+		option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/owner";
 	}
 // Queries a EntranceFee by index.
 	rpc EntranceFee(QueryGetEntranceFeeRequest) returns (QueryGetEntranceFeeResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/entrance_fee";
+		option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/entrance_fee";
 	}
 // Queries a LotteryState by index.
 	rpc LotteryState(QueryGetLotteryStateRequest) returns (QueryGetLotteryStateResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/lottery_state";
+		option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/lottery_state";
 	}
 // Queries a Player by id.
 	rpc Player(QueryGetPlayerRequest) returns (QueryGetPlayerResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/player/{id}";
+		option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/player/{id}";
 	}
 
 	// Queries a list of Player items.
 	rpc PlayerAll(QueryAllPlayerRequest) returns (QueryAllPlayerResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/player";
+		option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/player";
 	}
 
 // Queries a LastWinner by index.
 	rpc LastWinner(QueryGetLastWinnerRequest) returns (QueryGetLastWinnerResponse) {
-		option (google.api.http).get = "/lottery-chain-nel/lottery/last_winner";
+		option (google.api.http).get = "/github.com/mitchellnel/lottery-chain-nel/lottery/last_winner";
 	}
 // this line is used by starport scaffolding # 2
 }

@@ -2,8 +2,8 @@ package lottery
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"lottery-chain-nel/x/lottery/keeper"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

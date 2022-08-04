@@ -1,4 +1,4 @@
-module lottery-chain-nel
+module github.com/mitchellnel/lottery-chain-nel
 
 go 1.16
 

@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"lottery-chain-nel/x/lottery/keeper"
-	"lottery-chain-nel/x/lottery/types"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/keeper"
+	"github.com/mitchellnel/lottery-chain-nel/x/lottery/types"
 )
 
 // NewHandler ...
