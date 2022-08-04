@@ -565,19 +565,19 @@ func RegisterQueryHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"lottery-chain-nel", "lottery", "params"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "params"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Owner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"lottery-chain-nel", "lottery", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Owner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_EntranceFee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"lottery-chain-nel", "lottery", "entrance_fee"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_EntranceFee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "entrance_fee"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_LotteryState_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"lottery-chain-nel", "lottery", "lottery_state"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_LotteryState_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "lottery_state"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Player_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"lottery-chain-nel", "lottery", "player", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Player_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "player", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_PlayerAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"lottery-chain-nel", "lottery", "player"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_PlayerAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "player"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_LastWinner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"lottery-chain-nel", "lottery", "last_winner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_LastWinner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"github.com", "mitchellnel", "lottery-chain-nel", "lottery", "last_winner"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
